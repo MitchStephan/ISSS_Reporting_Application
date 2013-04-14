@@ -153,7 +153,6 @@
   					<legend> <span class="hoverable">Please Select Filters</span> </legend>
   					<span class="hoverable">Year</span> 
   						<select id="year">
-  							<option value="2013">2013</option>
   							<option value="2012">2012</option>
   							<option value="2011">2011</option>
   							<option value="2010">2010</option>
@@ -489,7 +488,7 @@
   							<option value="3">Student Distribution by College</option>
   							<option value="4">Student Countries of Citizenship</option>
   							<option value="5">Student Distribution by Gender</option>
-  							<option value="6">Student Distribution by World Region</option>
+  							<option value="6">Student Distribution by Country</option>
   							<option value="7">Student Distribution by World Region</option>
   							<option value="8">5 Year Enrollment Trends</option>
   						</select>

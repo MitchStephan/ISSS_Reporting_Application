@@ -21,7 +21,6 @@
  	$college = $_POST['college']; 
  	
  	$errorCount = 0;
- 	$currentYear = '2013';
  	$colors = "['#FF9900', '#EBB461' , '#FFCC00', '#D0D0D0', '#FF3333', '#FF6666', '#FCCCC', '#CCFF99', '#CC9966', '#CC6600', '#993333']";
  	
  	$response = '<script language="javascript"> function graph() {';
@@ -110,9 +109,14 @@
 			
 			//create chart
 			$response = $response."Highcharts.setOptions({ colors:".$colors." });"
-			."$('#graphContainer').highcharts({ chart: { type: 'column' }, title: { text: '".$reportName."' },"
+			."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { enabled: false }, title: { text: '".$reportName."' },"
 			."xAxis: { categories: ['Academic Level'] }, yAxis: { title: { text: 'Number of Students'} },"
 			."series: [{name: '".$colName1."', data: [".$val1."]}, { name: '".$colName2."', data: [".$val2."] }] });";
+  	}
+  	
+  	else if ($report == '2'){
+  		//build querry
+  		$query = "select academic_level, count(*) as count from semester";
   	}
  	
  	$response = $response.'} </script>';

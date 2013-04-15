@@ -11,7 +11,7 @@
   	
   		<!-- scripts -->
   		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 		<script src="http://code.highcharts.com/highcharts.js"></script>
   		<script language="javascript">
   			var shown = false;
@@ -27,7 +27,7 @@
   					shown = false;
   				}
   				else if (!shown) {
-  					$("#year").val('2013');
+  					$("#year").val('2012');
   					$("#academicLevel").val('All');
   					$("#gender").val('All');
   					$("#region").val('All');
@@ -39,6 +39,19 @@
   					$('#classificationFilters').fadeIn('slow');
   					shown = true;
   				}
+  			}
+  			
+  			function revertFilters() {
+  				$('#classificationFilters').fadeOut('fast');
+  				$("#academicLevel").val('All');
+  				$("#year").val('2012');
+  				$("#gender").val('All');
+				$("#region").val('All');
+				$("#country").val('All');
+				$("#program").val('All');
+				$("#program").val('All');
+				$("#college").val('All');
+				$('#classificationFilters').fadeIn('slow');
   			}
   			
   			function showReports(){
@@ -78,7 +91,7 @@
       			  			//alert ("ready state is " + update_request.readyState);
 							if (update_request.readyState === 4) {
 								//alert ("status is " + update_request.status);
-								alert ("response is " + update_request.responseText);
+								//alert ("response is " + update_request.responseText);
 	  							if (update_request.status === 200) {
 									//$('#processing').fadeOut('slow');
 									var response = update_request.responseText;
@@ -481,16 +494,15 @@
   					<!-- report types -->
   					<legend><span class="hoverable">Please Select a Report </span></legend>
   						<span class="hoverable"> Reports </span>
-  						<select id="reportOptions" onchange="runReport();">
+  						<select id="reportOptions" onchange="revertFilters(); runReport();">
   							<option value=""></option>
   							<option value="1">Student Distribution by Academic Level</option>
   							<option value="2">Student Distribution by Classification</option>
-  							<option value="3">Student Distribution by College</option>
-  							<option value="4">Student Countries of Citizenship</option>
-  							<option value="5">Student Distribution by Gender</option>
-  							<option value="6">Student Distribution by Country</option>
-  							<option value="7">Student Distribution by World Region</option>
-  							<option value="8">5 Year Enrollment Trends</option>
+  							<option value="3">Student Distribution by Gender</option>
+  							<option value="4">Student Distribution by College</option>
+  							<option value="5">Student Distribution by World Region</option>
+  							<option value="6">Distribution by Top 10 Countries</option>
+  							<option value="7">5 Year Enrollment Trends</option>
   						</select>
   				</fieldset>
   				</div> <!-- end reports -->

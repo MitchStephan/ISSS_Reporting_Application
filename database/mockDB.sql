@@ -41,17 +41,17 @@
 
 	
 	INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
-	VALUES('1', 'China', 'East Asia', '1');
+	VALUES('1', 'China', 'Asia', '1');
 	INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
 	VALUES('2', 'Mexico', 'North America', '2');
 	INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
-	VALUES('3', 'South Korea', 'East Asia', '1');
+	VALUES('3', 'South Korea', 'Asia', '1');
 	INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
-	VALUES('4', 'France', 'Western Europe', '3');
+	VALUES('4', 'France', 'Europe', '3');
 	INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
-	VALUES('5', 'Spain', 'Western Europe', '3');
+	VALUES('5', 'Jamaica', 'Latin America and Caribbean', '3');
 	INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
-	VALUES('6', 'Vietnam', 'East Asia', '1');
+	VALUES('6', 'Guam', 'Oceana', '1');
 	INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
 	VALUES('7', 'Israel', 'Middle East', '4');
 	INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
@@ -59,7 +59,7 @@
 	INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
 	VALUES('9', 'Lebanon', 'Middle East', '4');
 	INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
-	VALUES('10', 'Japan', 'East Asia', '10');
+	VALUES('10', 'Nigeria', 'Africa', '10');
 
 	
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)

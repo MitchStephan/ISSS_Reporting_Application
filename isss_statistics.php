@@ -42,7 +42,6 @@
   			}
   			
   			function revertFilters() {
-  				$('#classificationFilters').fadeOut('fast');
   				$("#academicLevel").val('All');
   				$("#year").val('2012');
   				$("#gender").val('All');
@@ -51,6 +50,7 @@
 				$("#program").val('All');
 				$("#program").val('All');
 				$("#college").val('All');
+				$('#classificationFilters').fadeOut('fast');
 				$('#classificationFilters').fadeIn('slow');
   			}
   			
@@ -187,19 +187,13 @@
   					<span class="hoverable">Region</span>
   						<select id="region">
   							<option value="All">All</option>
-  							<option value="Antarctic">Antarctic</option>
-  							<option value="Central Asia">Central Asia</option>
-  							<option value="East Asia">East Asia</option>
-  							<option value="Latin America">Latin America</option>
+  							<option value="Asia">Asia</option>
+  							<option value="Africa">Africa</option>
+  							<option value="Latin America and Caribbean">Latin America and Caribbean</option>
   							<option value="Middle East">Middle East</option>
-  							<option value="North Africa">North Africa</option>
   							<option value="North America">North America</option>
-  							<option value="Oceania">Oceania</option>
-  							<option value="Russian and Eastern Europe">Russian and Eastern Europe</option>
-  							<option value="South Asia">South Asia</option>
-  							<option value="Southeast Asia">Southeast Asia</option>
-  							<option value="Sub-saharan Africa">Sub-saharan Africa</option>
-  							<option value="Western Europe">Western Europe</option>
+  							<option value="Oceana">Oceana</option>
+  							<option value="Europe">Europe</option>
   						</select>
   						<br /> <br />
   					<span class="hoverable">Country</span>

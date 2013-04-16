@@ -142,7 +142,7 @@
 		$response = $response."Highcharts.setOptions({ colors:".$colors." });"
 		."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { position: { align: 'right', verticalAlign: 'bottom'},"
 		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} },"
-		."title: { text: '".$reportName."' }, xAxis: { categories: ['Academic Level'] }, yAxis: { title: { text: 'Number of Students'} },"
+		."title: { text: '".$reportName." (".$year.")' }, xAxis: { categories: ['Academic Level'] }, yAxis: { title: { text: 'Number of Students'} },"
 		."series: [{name: '".$colName1."', data: [".$val1."]}, { name: '".$colName2."', data: [".$val2."] }],  });";
   	}
   	
@@ -316,7 +316,7 @@
 		$response = $response."Highcharts.setOptions({ colors:".$colors." });"
 		."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { position: { align: 'right', verticalAlign: 'bottom'},"
 		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} }," 
-		."title: { text: '".$reportName."' },"
+		."title: { text: '".$reportName." (".$year.")' },"
 		."xAxis: { categories: ['Classification'] }, yAxis: { title: { text: 'Number of Students'} },"
 		."series: [{name: 'Freshman', data: [".$freshmanNum."]}, { name: 'Sophomore', data: [".$sophomoreNum."] },"
 		." { name: 'Junior', data: [".$juniorNum."] }, { name: 'Senior', data: [".$seniorNum."] },"
@@ -370,7 +370,7 @@
                 plotShadow: false
             },
             title: {
-                text: '".$reportName."'
+                text: '".$reportName." (".$year.")'
             },
             tooltip: {
         	    pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b> <br /> Number of Students: <b>{point.y}</b>',
@@ -865,7 +865,7 @@
 		$response = $response."Highcharts.setOptions({ colors:".$colors." });"
 		."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { position: { align: 'right', verticalAlign: 'bottom', y: .45},"
 		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} }," 
-		."title: { text: '".$reportName."' },"
+		."title: { text: '".$reportName." (".$year.")' },"
 		."xAxis: { categories: ['Schools and Colleges'] }, yAxis: { title: { text: 'Number of Students'} },"
 		."series: [{name: 'Architecture', data: [".$architectureNum."]}, { name: 'Business', data: [".$businessNum."] },"
 		." { name: 'Communication', data: [".$communicationNum."] }, { name: 'Education', data: [".$educationNum."] }, { name: 'Engineering', data: [".$engineeringNum."] },"
@@ -914,13 +914,17 @@
 		$response = $response."Highcharts.setOptions({ colors:".$colors." });"
 		."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { position: { align: 'right', verticalAlign: 'bottom', y: .45},"
 		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} }," 
-		."title: { text: '".$reportName."' },"
+		."title: { text: '".$reportName." (".$year.")' },"
 		."xAxis: { categories: ['Countries'] }, yAxis: { title: { text: 'Number of Students'} },"
 		."series: [{name: '".$nameArray[0]."', data: [".$countArray[0]."]}, { name: '".$nameArray[1]."', data: [".$countArray[1]."] },"
 		." { name: '".$nameArray[2]."', data: [".$countArray[2]."] }, { name: '".$nameArray[3]."', data: [".$countArray[3]."] },"
 		." { name: '".$nameArray[4]."', data: [".$countArray[4]."] }, { name: '".$nameArray[5]."', data: [".$countArray[5]."] }, 
 		{ name: '".$nameArray[6]."', data: [".$countArray[6]."] }, { name: '".$nameArray[7]."', data: [".$countArray[7]."] },
 		{ name: '".$nameArray[8]."', data: [".$countArray[8]."] }, { name: '".$nameArray[9]."', data: [".$countArray[9]."] } ]});";
+ 	}
+ 	//5 year enrollement trends
+ 	else if ($report == '7'){
+ 	
  	}
  	
  	$response = $response.'} </script>';

@@ -44,7 +44,7 @@
 			$q = $q." ,programs";
 		}
 		
-		if ($college != 'All' && $college != "0") {
+		if ($college != 'All' && $college != '0') {
 			$q = $q." ,academic_info";
 		}
 		
@@ -406,7 +406,7 @@
 		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} }
         });";
   	}
- 	//student distribution by country
+ 	//student distribution by college
  	else if ($report == '4'){
  		$total = 0;
  		
@@ -876,6 +876,223 @@
   		
  		
  	}
+	
+	//student distribution by region
+ 	else if ($report == '5'){
+		$total = 0;
+		
+		//obtain Asia
+		$query = "select country.Region_of_citizenship as region, count(*) as count from semester, student, country";
+		//make join
+ 		$query = $query.makeJoins('0', '0', '0', $program, $college);
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, 'All', 'All', $program, $college);
+ 		//finish query
+ 		$pos = strpos($query, '=');
+		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Asia' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Asia' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 		}
+		
+		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$asiaNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $asiaNum;
+				
+		//obtain Africa
+		$query = "select country.Region_of_citizenship as region, count(*) as count from semester, student, country";
+		//make join
+ 		$query = $query.makeJoins('0', '0', '0', $program, $college);
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, 'All', 'All', $program, $college);
+ 		//finish query
+ 		$pos = strpos($query, '=');
+		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Africa' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Africa' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 		}
+		
+		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$africaNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $africaNum;
+		
+		//obtain Latin America and Caribbean
+		$query = "select country.Region_of_citizenship as region, count(*) as count from semester, student, country";
+		//make join
+ 		$query = $query.makeJoins('0', '0', '0', $program, $college);
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, 'All', 'All', $program, $college);
+ 		//finish query
+ 		$pos = strpos($query, '=');
+		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Latin America and Caribbean' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Latin America and Caribbean' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 		}
+		
+		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$latinNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $latinNum;
+		
+		//obtain Middle East
+		$query = "select country.Region_of_citizenship as region, count(*) as count from semester, student, country";
+		//make join
+ 		$query = $query.makeJoins('0', '0', '0', $program, $college);
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, 'All', 'All', $program, $college);
+ 		//finish query
+ 		$pos = strpos($query, '=');
+		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Middle East' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Middle East' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 		}
+		
+		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$middleEastNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $middleEastNum;
+		
+		//obtain North America
+		$query = "select country.Region_of_citizenship as region, count(*) as count from semester, student, country";
+		//make join
+ 		$query = $query.makeJoins('0', '0', '0', $program, $college);
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, 'All', 'All', $program, $college);
+ 		//finish query
+ 		$pos = strpos($query, '=');
+		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'North America' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'North America' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 		}
+		
+		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$northAmericaNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $northAmericaNum;
+		
+		//obtian Oceana
+		$query = "select country.Region_of_citizenship as region, count(*) as count from semester, student, country";
+		//make join
+ 		$query = $query.makeJoins('0', '0', '0', $program, $college);
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, 'All', 'All', $program, $college);
+ 		//finish query
+ 		$pos = strpos($query, '=');
+		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Oceana' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Oceana' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 		}
+		
+		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$oceanaNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $oceanaNum;
+		
+		//obtian Europe
+		$query = "select country.Region_of_citizenship as region, count(*) as count from semester, student, country";
+		//make join
+ 		$query = $query.makeJoins('0', '0', '0', $program, $college);
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, 'All', 'All', $program, $college);
+ 		//finish query
+ 		$pos = strpos($query, '=');
+		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Europe' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Europe' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 		}
+		
+		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$europeNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $europeNum;
+		
+		//create chart
+		$response = $response."Highcharts.setOptions({ colors:".$colors." });"
+		."$('#graphContainer').highcharts({
+        chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '".$reportName." (".$year.")'
+            },
+            tooltip: {
+        	    pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b> <br /> Number of Students: <b>{point.y}</b>',
+            	valueDecimals: 0
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Percent of Students',
+                data: [
+                    {
+                        name: 'Asia',
+                        y: ".$asiaNum.",
+                        sliced: true,
+                        selected: true
+                    },
+					['Africa', ".$africaNum."],
+					['Latin America and Caribbean', ".$latinNum."],
+					['Middle East', ".$middleEastNum."],
+					['North America', ".$northAmericaNum."],
+					['Oceana', ".$oceanaNum."],
+					['Europe', ".$europeNum."]
+                ]
+            }], credits: { position: { align: 'right', verticalAlign: 'bottom'},"
+		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} }
+        });";
+ 	}
+	
  	//distribution by top 10 countries
  	else if ($report == '6') {
  		//obtain top 10 countries
@@ -921,8 +1138,8 @@
 		." { name: '".$nameArray[4]."', data: [".$countArray[4]."] }, { name: '".$nameArray[5]."', data: [".$countArray[5]."] }, 
 		{ name: '".$nameArray[6]."', data: [".$countArray[6]."] }, { name: '".$nameArray[7]."', data: [".$countArray[7]."] },
 		{ name: '".$nameArray[8]."', data: [".$countArray[8]."] }, { name: '".$nameArray[9]."', data: [".$countArray[9]."] } ]});";
- 	}
- 	//5 year enrollement trends
+ 	}	
+	//5 year enrollement trends
  	else if ($report == '7'){
  	
  	}

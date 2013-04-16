@@ -32,11 +32,11 @@
 			$q = $q." ,student";
 		}
 		
-		if (($region != 'All' || $country != 'All') && $gender == '0') {
+		if ( ( ($region != 'All' && $country != '0') || ($country != 'All' && $country != '0') ) && $gender == '0') {
 			$q = $q." ,country";
-		} else if (($region != 'All' || $country != 'All') && $gender == 'All') {
+		} else if ( ( ($region != 'All' && $country != '0') || ($country != 'All' && $country != '0') ) && $gender == 'All') {
 			$q = $q." ,student, country";
-		} else if (($region != 'All' || $country != 'All') && $gender != 'All') {
+		} else if ( ( ($region != 'All' && $country != '0') || ($country != 'All' && $country != '0') ) && $gender != 'All') {
 			$q = $q." ,country";
 		}
 		
@@ -406,7 +406,7 @@
 		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} }
         });";
   	}
- 
+ 	//student distribution by country
  	else if ($report == '4'){
  		$total = 0;
  		
@@ -866,7 +866,7 @@
 		."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { position: { align: 'right', verticalAlign: 'bottom', y: .45},"
 		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} }," 
 		."title: { text: '".$reportName."' },"
-		."xAxis: { categories: ['Classification'] }, yAxis: { title: { text: 'Number of Students'} },"
+		."xAxis: { categories: ['Schools and Colleges'] }, yAxis: { title: { text: 'Number of Students'} },"
 		."series: [{name: 'Architecture', data: [".$architectureNum."]}, { name: 'Business', data: [".$businessNum."] },"
 		." { name: 'Communication', data: [".$communicationNum."] }, { name: 'Education', data: [".$educationNum."] }, { name: 'Engineering', data: [".$engineeringNum."] },"
 		." { name: 'Fine Arts', data: [".$fineArtsNum."] }, { name: 'Geosciences', data: [".$geosciencesNum."] }, { name: 'Graduate', data: [".$graduateNum."] }, { name: 'Information', data: [".$informationNum."] },"
@@ -875,6 +875,52 @@
 		{ name: 'Social Work', data: [".$socialWorkNum."] }, { name: 'Undergraduate', data: [".$undergraduateNum."] }  ]});";
   		
  		
+ 	}
+ 	//distribution by top 10 countries
+ 	else if ($report == '6') {
+ 		//obtain top 10 countries
+ 		$query = "select country.country_name as country, count(*) as count from semester,student,country";
+ 		//make join
+ 		$query = $query.makeJoins('0', '0', '0', $program, $college);
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, 'All', $program, $college);
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year."  and semester.ut_eid = student.ut_eid and student.country_code = country.country_code 
+ 			and semester='Fall' group by country.country_name order by count(*) DESC;";
+ 		} else {
+ 			$query = $query." and year=".$year."  and semester.ut_eid = student.ut_eid and student.country_code = country.country_code 
+ 			and semester='Fall' group by country.country_name order by count(*) DESC;";
+ 		}
+ 		
+ 		echo ($query."       ");
+ 		
+ 		$countArray = new SplFixedArray(10);
+ 		$nameArray = new SplFixedArray(10);
+ 		$total = 0;
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		for ($i = 0; $i < 10; $i++) {
+ 			$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 			$countArray[$i] = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 			$total += $countArray[$i];
+ 			$nameArray[$i] = $queryResult['country'];
+ 		}
+ 		
+ 		//create chart
+		$response = $response."Highcharts.setOptions({ colors:".$colors." });"
+		."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { position: { align: 'right', verticalAlign: 'bottom', y: .45},"
+		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} }," 
+		."title: { text: '".$reportName."' },"
+		."xAxis: { categories: ['Countries'] }, yAxis: { title: { text: 'Number of Students'} },"
+		."series: [{name: '".$nameArray[0]."', data: [".$countArray[0]."]}, { name: '".$nameArray[1]."', data: [".$countArray[1]."] },"
+		." { name: '".$nameArray[2]."', data: [".$countArray[2]."] }, { name: '".$nameArray[3]."', data: [".$countArray[3]."] },"
+		." { name: '".$nameArray[4]."', data: [".$countArray[4]."] }, { name: '".$nameArray[5]."', data: [".$countArray[5]."] }, 
+		{ name: '".$nameArray[6]."', data: [".$countArray[6]."] }, { name: '".$nameArray[7]."', data: [".$countArray[7]."] },
+		{ name: '".$nameArray[8]."', data: [".$countArray[8]."] }, { name: '".$nameArray[9]."', data: [".$countArray[9]."] } ]});";
  	}
  	
  	$response = $response.'} </script>';

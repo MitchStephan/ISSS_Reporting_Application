@@ -44,7 +44,7 @@
 			$q = $q." ,programs";
 		}
 		
-		if ($college != 'All') {
+		if ($college != 'All' && $college != "0") {
 			$q = $q." ,academic_info";
 		}
 		
@@ -163,7 +163,7 @@
 			$query = $query." and year=".$year." and semester='Fall' and classification='Freshman' group by classification;"; 
 		}
 		
-		//echo ($query."      ");
+		echo ($query."      ");
 		
 		//execute query and store results
 		$stmt = $db_server->query($query);
@@ -326,7 +326,7 @@
   	}
   	
   	//student distribution by gender
- 	if ($report == '3'){
+ 	else if ($report == '3'){
 		//build querry
 		$query = "select student.gender as gender, count(*) as count from semester, student";
 		//select joins
@@ -407,6 +407,476 @@
         });";
   	}
  
+ 	else if ($report == '4'){
+ 		$total = 0;
+ 		
+ 		//obtain Engineering
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Cockrell School of Engineering'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Cockrell School of Engineering'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$engineeringNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $engineeringNum;
+ 		
+ 		//obtain Communication
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Communication'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Communication'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$communicationNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $communicationNum;
+ 		
+ 		//obtain Education
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Education'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Education'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$educationNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $educationNum;
+ 		
+ 		//obtain Fine Arts
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Fine Arts'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Fine Arts'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$fineArtsNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $fineArtsNum;
+ 		
+ 		//obtain Liberal Arts
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Liberal Arts'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Liberal Arts'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$liberalArtsNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $liberalArtsNum;
+ 		
+ 		//obtain Natural Sciences
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Natural Sciences'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Natural Sciences'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$naturalSciencesNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $naturalSciencesNum;
+ 		
+ 		//obtain Pharmacy
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Pharmacy'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Pharmacy'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$pharmacyNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $pharmacyNum;
+ 		
+ 		//obtain Medical School
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Dell Medical School'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Dell Medical School'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$medSchoolNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $medSchoolNum;
+ 		
+ 		//obtain Graduate
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Graduate School'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Graduate School'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$graduateNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $graduateNum;
+ 		
+ 		//obtain Geosciences
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Jackson School of Geosciences'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Jackson School of Geosciences'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$geosciencesNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $geosciencesNum;
+ 		
+ 		//obtain Public Affairs
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Lyndon B. Johnson School of Public Affairs'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Lyndon B. Johnson School of Public Affairs'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$publicAffarisNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $publicAffarisNum;
+ 		
+ 		//obtain Business
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'McCombs School of Business'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'McCombs School of Business'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$businessNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $businessNum;
+ 		
+ 		//obtain Architecture
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Architecture'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Architecture'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$architectureNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $architectureNum;
+ 		
+ 		//obtain Information
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Information'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Information'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$informationNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $informationNum;
+ 		
+ 		
+ 		//obtain Law
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Law'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Law'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$lawNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $lawNum;
+ 		
+ 		//obtain Nursing
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Nursing'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Nursing'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$nursingNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $nursingNum;
+ 	
+ 		//obtain Social Work
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Social Work'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Social Work'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$socialWorkNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $socialWorkNum;
+ 			
+ 		//obtain Undergraduate Studies
+ 		$query = "select academic_info.school_name as school, count(*) as count from semester, academic_info";
+ 		//make join
+ 		$query = $query.makeJoins($gender, $region, $country, $program, '0');
+ 		$query = $query." where";
+ 		//input where conditions
+ 		$query = $query.makeQuery($level, $gender, $region, $country, $program, 'All');
+ 		//finish query
+ 		$pos = strpos($query, '=');
+ 		if ($pos === false){
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Undergraduate Studies'
+ 			group by academic_info.school_name;";
+ 		} else {
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Undergraduate Studies'
+ 			group by academic_info.school_name;"; 
+ 		}
+ 		
+ 		//echo ($query."       ");
+ 		
+ 		//execute query and store results
+ 		$stmt = $db_server->query($query);
+ 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+ 		$undergraduateNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 		$total += $undergraduateNum;
+		
+		//create chart
+		$response = $response."Highcharts.setOptions({ colors:".$colors." });"
+		."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { position: { align: 'right', verticalAlign: 'bottom', y: .45},"
+		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} }," 
+		."title: { text: '".$reportName."' },"
+		."xAxis: { categories: ['Classification'] }, yAxis: { title: { text: 'Number of Students'} },"
+		."series: [{name: 'Architecture', data: [".$architectureNum."]}, { name: 'Business', data: [".$businessNum."] },"
+		." { name: 'Communication', data: [".$communicationNum."] }, { name: 'Education', data: [".$educationNum."] }, { name: 'Engineering', data: [".$engineeringNum."] },"
+		." { name: 'Fine Arts', data: [".$fineArtsNum."] }, { name: 'Geosciences', data: [".$geosciencesNum."] }, { name: 'Graduate', data: [".$graduateNum."] }, { name: 'Information', data: [".$informationNum."] },"
+		."{ name: 'Law', data: [".$lawNum."] }, { name: 'Liberal Arts', data: [".$liberalArtsNum."] }, { name: 'Medical', data: [".$medSchoolNum."] }, { name: 'Natural Sciences', data: [".$naturalSciencesNum."] }, 
+		{ name: 'Nursing', data: [".$nursingNum."] }, { name: 'Pharmacy', data: [".$pharmacyNum."] }, { name: 'Public Affairs', data: [".$publicAffarisNum."] },
+		{ name: 'Social Work', data: [".$socialWorkNum."] }, { name: 'Undergraduate', data: [".$undergraduateNum."] }  ]});";
+  		
+ 		
+ 	}
+ 	
  	$response = $response.'} </script>';
 	
 	echo ($response);

@@ -143,7 +143,7 @@
 		."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { position: { align: 'right', verticalAlign: 'bottom'},"
 		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} },"
 		."title: { text: '".$reportName."' }, xAxis: { categories: ['Academic Level'] }, yAxis: { title: { text: 'Number of Students'} },"
-		."series: [{name: '".$colName1."', data: [".$val1."]}, { name: '".$colName2."', data: [".$val2."] }] });";
+		."series: [{name: '".$colName1."', data: [".$val1."]}, { name: '".$colName2."', data: [".$val2."] }], });";
   	}
   	
   	//student distribution by classification
@@ -373,8 +373,8 @@
                 text: '".$reportName."'
             },
             tooltip: {
-        	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
-            	percentageDecimals: 1
+        	    pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b> <br /> Number of Students: <b>{point.y}</b>',
+            	valueDecimals: 0
             },
             plotOptions: {
                 pie: {

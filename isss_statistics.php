@@ -11,8 +11,8 @@
   	
   		<!-- scripts -->
   		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script src="http://code.highcharts.com/highcharts.js"></script>
-		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+		<script src="js/highcharts.js"></script>
+		<script src="js/exporting.js"></script>
 		<script src="js/excanvas.compiled.js"></script>
 	
 		
@@ -79,7 +79,7 @@
   				if (reportVal != "") {
   					var executed = false;
   					var update_request = new XMLHttpRequest();
-  					update_request.open('POST', 'https://zweb.cs.utexas.edu/users/cs105-s13/bveltman/ISSS_Application/createChart.php');
+  					update_request.open('POST', './createChart.php');
   					var params = "reportName=" + reportName + "&reportVal=" + reportVal + "&year=" + yearVal + "&academicLevel=" + academicLevelVal + ""
   					+ "&gender=" + genderVal + "&region=" + regionVal + "&country=" + countryVal 
   					+ "&program=" + programVal + "&college=" + collegeVal + "";
@@ -94,7 +94,7 @@
       			  			//alert ("ready state is " + update_request.readyState);
 							if (update_request.readyState === 4) {
 								//alert ("status is " + update_request.status);
-								alert ("response is " + update_request.responseText);
+								//alert ("response is " + update_request.responseText);
 	  							if (update_request.status === 200) {
 									//$('#processing').fadeOut('slow');
 									var response = update_request.responseText;
@@ -127,7 +127,7 @@
   		<!-- stylesheets -->
   		<link rel="stylesheet" href="styles/default.css" type="text/css" />
   		<link rel="stylesheet" href="styles/application.css" type="text/css" />
-  		<link rel="stylesheet" href="http://world.utexas.edu/modules/mod_superfishmenu/tmpl/css/superfish.css" type="text/css" />
+  		<!-- <link rel="stylesheet" href="http://world.utexas.edu/modules/mod_superfishmenu/tmpl/css/superfish.css" type="text/css" /> -->
 
   	</head>
   	

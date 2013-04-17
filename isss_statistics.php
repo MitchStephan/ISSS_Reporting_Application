@@ -175,6 +175,14 @@
   							<option value="2009">2009</option>
   							<option value="2008">2008</option>
   						</select>
+  					<span class="hoverable">Population</span>
+						<select id="program">
+							<option value="All">Students & Scholars</option>
+							<option value="1">Students</option>
+							<option value="2">Scholars</option>
+							<option value="3">Exchange Students Only</option>
+							<option value="4">Sponsored Students Only</option>
+						</select>
   					<span class="hoverable">Academic Level</span>
   						<select id="academicLevel">
   							<option value="All">All</option>
@@ -187,6 +195,7 @@
   							<option value="m">Male</option>
   							<option value="f">Female</option>
   						</select>
+  						<br /> <br />
   					<span class="hoverable">Region</span>
   						<select id="region">
   							<option value="All">All</option>
@@ -198,7 +207,6 @@
   							<option value="Oceana">Oceana</option>
   							<option value="Europe">Europe</option>
   						</select>
-  						<br /> <br />
   					<span class="hoverable">Country</span>
   						<select id="country">
 							<option value="All">All</option>					
@@ -452,12 +460,6 @@
 							<option value="ZM">Zambia</option>
 							<option value="ZW">Zimbabwe</option>
 						</select>
-						<span class="hoverable">Program</span>
-						<select id="program">
-							<option value="All">All</option>
-							<option value="1">Sponsored</option>
-							<option value="2">Exchange</option>
-						</select>
 						<span class="hoverable">College</span>
 						<select id="college">
 							<option value="All">All</option>
@@ -480,6 +482,7 @@
 							<option>School of Social Work</option>
 							<option>School of Undergraduate Studies</option>
 						</select>
+						<br /><br />
 						<input type="button" value="ָApply" style="float: right;" onclick="runReport()"></input>
 					</fieldset>
   					</div><!-- end classificationFilters -->

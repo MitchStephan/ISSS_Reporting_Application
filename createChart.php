@@ -85,10 +85,10 @@
 		}
 		
 		if ($program != 'All' && !$and && $program == '1') {
-			$q = $q." (programs.program_code='3' or programs.program_code='4') and semester.program_code=programs.program_code";
+			$q = $q." (programs.program_code='1' or programs.program_code='3' or programs.program_code='4') and semester.program_code=programs.program_code";
 			$and = true;
 		} else if ($program != 'All' && $program == '1') {
-			$q = $q." and (programs.program_code='3' or programs.program_code='4') and semester.program_code=programs.program_code";
+			$q = $q." and (programs.program_code='1' or programs.program_code='3' or programs.program_code='4') and semester.program_code=programs.program_code";
 		} else if ($program != 'All' && !$and) {
 			$q = $q." programs.program_code='".$program."' and semester.program_code=programs.program_code";
 			$and = true;

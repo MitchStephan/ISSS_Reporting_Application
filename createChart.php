@@ -1221,21 +1221,22 @@
  		
  		echo ($query."       ");
  		
- 		$countArray = new SplFixedArray(5);
- 		$nameArray = new SplFixedArray(5);
+ 		$countArray = array();
+ 		$nameArray = array();
  		$total = 0;
  		
  		//execute query and store results
  		$stmt = $db_server->query($query);
- 		for ($i = 0; $i < 5; $i++) {
- 			$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
- 			$countArray[$i] = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
- 			$total += $countArray[$i];
- 			$nameArray[$i] = $queryResult['year'];
+ 		$j = 0;
+ 		while($queryResult = $stmt->fetch_array(MYSQLI_ASSOC)) {
+ 			$countArray[$j] = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+ 			$total += $countArray[$j];
+ 			$nameArray[$j] = $queryResult['year'];
+ 			$j = $j + 1;
  		}
  		
  		//create chart
-		$response = $response."Highcharts.setOptions({ colors:".$colors." });"
+	 	$response = $response."Highcharts.setOptions({ colors:".$colors." });"
 		."$('#graphContainer').highcharts({
             chart: {
                 type: 'line',
@@ -1243,10 +1244,15 @@
                 marginBottom: 25
             },
             title: {
-                text: '".$reportName." (".$year.")',
+                text: '".$reportName."',
             },
             xAxis: {
-                categories: ['".$nameArray[0]."', '".$nameArray[1]."', '".$nameArray[2]."', '".$nameArray[3]."', '".$nameArray[4]."']
+                categories: [";
+                for ($i = 0; $i < count($nameArray); $i++){
+                	$response = $response."'".$nameArray[$i]."', ";
+                }
+                $response = substr($response, 0, -2);
+                $response = $response."]
             },
             yAxis: {
                 title: {
@@ -1268,7 +1274,12 @@
             },
             series: [{
                 name: 'Enrollment',
-                data: [".$countArray[0].", ".$countArray[1].", ".$countArray[2].", ".$countArray[3].", ".$countArray[4]."]
+                data: [";
+                for ($i = 0; $i < count($countArray); $i++){
+                	$response = $response.$countArray[$i].", ";
+                }
+                $response = substr($response, 0, -2);
+                $response = $response."]
             }]
         });";
  		

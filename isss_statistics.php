@@ -1,3 +1,16 @@
+<?php
+	
+	//establish connection to database
+	require_once 'database/DBInfo.php';
+	$db_server = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+	
+	if ($db_server->connect_errno) {
+		// connect_error returns the a string of the error from the latest sql command
+		print ("<h1> There was an error:</h1> <p> " . $db_server->connect_error . "</p>");
+	}
+	
+	$latestYear = 0;
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb" >
 	
@@ -20,7 +33,8 @@
   			var shown = false;
   			
   			//shows filters in UI when a report is selected
-  			function showFilters (){
+  			function showFilters (reportVal){
+  				//show or hide filters based on report request state
   				if ($('#reportOptions').val() === ""){
   					$('#classificationFilters').fadeOut('fast');
   					$('#graphContainer').fadeOut('fast');
@@ -30,23 +44,44 @@
   					shown = false;
   				}
   				else if (!shown) {
-  					$("#year").val('2012');
-  					$("#academicLevel").val('All');
-  					$("#gender").val('All');
-  					$("#region").val('All');
-  					$("#country").val('All');
-  					$("#program").val('All');
-  					$("#program").val('All');
-  					$("#college").val('All');
-  					$('#worldMap').fadeOut('fast');
-  					$('#classificationFilters').fadeIn('slow');
+  					$("#year").val(<?php echo("'".$latestYear."'"); ?>);
+					$("#academicLevel").val('All');
+					$("#gender").val('All');
+					$("#region").val('All');
+					$("#country").val('All');
+					$("#program").val('All');
+					$("#college").val('All');
+					$('#worldMap').fadeOut('fast');
+					$('#classificationFilters').fadeIn('slow');
   					shown = true;
   				}
+  				
+  				//disable filters that are not applicable to current query
+				if (reportVal == '1'){
+					$("#academicLevel").prop("disabled", true);
+				} else if (reportVal == '3'){
+					$("#gender").prop("disabled", true);
+				} else if (reportVal == '4'){
+					$("#college").prop("disabled", true);
+				} else if (reportVal == '5'){
+					$("#region").prop("disabled", true);
+					$("#country").prop("disabled", true);
+				} else if (reportVal == '6'){
+					$("#country").prop("disabled", true);
+				} else if (reportVal == '7'){
+					$("#year").prop("disabled", true);
+				}
   			}
   			
   			function revertFilters() {
+  				$("#year").prop("disabled", false);
+  				$("#academicLevel").prop("disabled", false);
+  				$("#gender").prop("disabled", false);
+  				$("#college").prop("disabled", false);
+  				$("#region").prop("disabled", false);
+				$("#country").prop("disabled", false);
   				$("#academicLevel").val('All');
-  				$("#year").val('2012');
+  				$("#year").val(<?php echo("'".$latestYear."'"); ?>);
   				$("#gender").val('All');
 				$("#region").val('All');
 				$("#country").val('All');
@@ -119,7 +154,7 @@
       					}
       			  	}
   				}
-  				showFilters();
+  				showFilters(reportVal);
   				return false;	
   			}
   		</script>
@@ -167,15 +202,22 @@
   					<br /> <br />
   					<fieldset>
   					<legend> <span class="hoverable">Please Select Filters</span> </legend>
-  					<span class="hoverable">Year</span> 
+  					<span id="yearText" class="hoverable">Year</span> 
   						<select id="year">
-  							<option value="2012">2012</option>
-  							<option value="2011">2011</option>
-  							<option value="2010">2010</option>
-  							<option value="2009">2009</option>
-  							<option value="2008">2008</option>
+  							<?php
+  								$query = "select distinct year from semester order by year DESC;";
+  								$stmt = $db_server->query($query);
+  								$options = "";
+								while ($queryResult = $stmt->fetch_array(MYSQLI_ASSOC)) {
+									if ($queryResult['year'] > $latestYear){
+										$latestYear = $queryResult['year'];
+									}
+									$options = $options.'<option value="'.$queryResult['year'].'">'.$queryResult['year'].'</option>';
+								}
+								echo('<html>'.$options.'</html>');
+  							?>
   						</select>
-  					<span class="hoverable">Population</span>
+  					<span id="populationText" class="hoverable">Population</span>
 						<select id="program">
 							<option value="All">Students & Scholars</option>
 							<option value="1">Students</option>
@@ -183,20 +225,42 @@
 							<option value="3">Exchange Students Only</option>
 							<option value="4">Sponsored Students Only</option>
 						</select>
-  					<span class="hoverable">Academic Level</span>
+  					<span id="academicLevelText" class="hoverable">Academic Level</span>
   						<select id="academicLevel">
   							<option value="All">All</option>
   							<option value="UG">Undergraduate</option>
   							<option value="G">Graduate</option>
   						</select>
-  					<span class="hoverable">Gender</span>
+  					<span id="collegeText" class="hoverable">College</span>
+  						<select id="college">
+							<option value="All">All</option>
+							<option>Cockrell School of Engineering</option>
+							<option>College of Communication</option>
+							<option>College of Education</option>
+							<option>College of Fine Arts</option>
+							<option>College of Liberal Arts</option>
+							<option>College of Natural Sciences</option>
+							<option>College of Pharmacy</option>
+							<option>Dell Medical School</option>
+							<option>Graduate School</option>
+							<option>Jackson School of Geosciences</option>
+							<option>Lyndon B. Johnson School of Public Affairs</option>
+							<option>McCombs School of Business</option>
+							<option>School of Architecture</option>
+							<option>School of Information</option>
+							<option>School of Law</option>
+							<option>School of Nursing</option>
+							<option>School of Social Work</option>
+							<option>School of Undergraduate Studies</option>
+						</select>
+  						<br /> <br />
+  					<span id="genderText" class="hoverable">Gender</span>
   						<select id="gender">
   							<option value="All">All</option>
   							<option value="m">Male</option>
   							<option value="f">Female</option>
   						</select>
-  						<br /> <br />
-  					<span class="hoverable">Region</span>
+  					<span id="RegionText" class="hoverable">Region</span>
   						<select id="region">
   							<option value="All">All</option>
   							<option value="Asia">Asia</option>
@@ -207,7 +271,7 @@
   							<option value="Oceana">Oceana</option>
   							<option value="Europe">Europe</option>
   						</select>
-  					<span class="hoverable">Country</span>
+  					<span id="countryText" class="hoverable">Country</span>
   						<select id="country">
 							<option value="All">All</option>					
 							<option value="AF">Afghanistan</option>
@@ -460,29 +524,6 @@
 							<option value="ZM">Zambia</option>
 							<option value="ZW">Zimbabwe</option>
 						</select>
-						<span class="hoverable">College</span>
-						<select id="college">
-							<option value="All">All</option>
-							<option>Cockrell School of Engineering</option>
-							<option>College of Communication</option>
-							<option>College of Education</option>
-							<option>College of Fine Arts</option>
-							<option>College of Liberal Arts</option>
-							<option>College of Natural Sciences</option>
-							<option>College of Pharmacy</option>
-							<option>Dell Medical School</option>
-							<option>Graduate School</option>
-							<option>Jackson School of Geosciences</option>
-							<option>Lyndon B. Johnson School of Public Affairs</option>
-							<option>McCombs School of Business</option>
-							<option>School of Architecture</option>
-							<option>School of Information</option>
-							<option>School of Law</option>
-							<option>School of Nursing</option>
-							<option>School of Social Work</option>
-							<option>School of Undergraduate Studies</option>
-						</select>
-						<br /><br />
 						<input type="button" value="ָApply" style="float: right;" onclick="runReport()"></input>
 					</fieldset>
   					</div><!-- end classificationFilters -->
@@ -502,7 +543,7 @@
   							<option value="4">Student Distribution by College</option>
   							<option value="5">Student Distribution by World Region</option>
   							<option value="6">Distribution by Top 10 Countries</option>
-  							<option value="7">5 Year Enrollment Trends</option>
+  							<option value="7">Enrollment Trends</option>
   						</select>
   				</fieldset>
   				</div> <!-- end reports -->

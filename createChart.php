@@ -40,7 +40,7 @@
 			$q = $q." ,country";
 		}
 		
-		if ($program != 'All') {
+		if ($program != 'All' && $program != '0') {
 			$q = $q." ,programs";
 		}
 		
@@ -84,7 +84,12 @@
 			$q = $q." and country.country_name='".$country."' and country.country_code=student.country_code and semester.ut_eid=student.ut_eid";
 		}
 		
-		if ($program != 'All' && !$and) {
+		if ($program != 'All' && !$and && $program == '1') {
+			$q = $q." (programs.program_code='3' or programs.program_code='4') and semester.program_code=programs.program_code";
+			$and = true;
+		} else if ($program != 'All' && $program == '1') {
+			$q = $q." and (programs.program_code='3' or programs.program_code='4') and semester.program_code=programs.program_code";
+		} else if ($program != 'All' && !$and) {
 			$q = $q." programs.program_code='".$program."' and semester.program_code=programs.program_code";
 			$and = true;
 		} else if ($program != 'All') {
@@ -107,7 +112,7 @@
  	
  	//student distribution by academic_level
  	if ($report == '1'){
-		//build querry
+		//obtain undergrads
 		$query = "select academic_level, count(*) as count from semester";
 		//select joins
 		$query = $query.makeJoins($gender, $region, $country, $program, $college);
@@ -117,33 +122,68 @@
 		//finish query
 		$pos = strpos($query, '=');
 		if ($pos === false){
-		$query = $query." year=".$year." and semester='Fall' group by academic_level;"; 
+		$query = $query." year=".$year." and semester='Fall' and academic_level='UG' group by academic_level;"; 
 		} else {
-			$query = $query." and year=".$year." and semester='Fall' group by academic_level;"; 
+			$query = $query." and year=".$year." and semester='Fall' and academic_level='UG' group by academic_level;"; 
 		}
 		
 		//echo ($query."   ");
 		
-		$val1 = $val2 = 0;
-		$colName1 = $colName2 = "";
+		$total = 0;
 		
 		//execute query and store results
 		$stmt = $db_server->query($query);
 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
-		$val1 = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
-		$colName1 = ($queryResult['academic_level'] == 'UG'? 'Undergraduate' : 'Graduate');
-		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
-		$val2 = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
-		$colName2 = ($colName1 == 'Graduate'? 'Undergraduate' : 'Graduate');
+		$ugNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
 		
-		$total = $val1 + $val2;
+		//obtain graduates
+		$query = "select academic_level, count(*) as count from semester";
+		//select joins
+		$query = $query.makeJoins($gender, $region, $country, $program, $college);
+		$query = $query." where";
+		//input where conditions
+		$query = $query.makeQuery('All', $gender, $region, $country, $program, $college);
+		//finish query
+		$pos = strpos($query, '=');
+		if ($pos === false){
+		$query = $query." year=".$year." and semester='Fall' and academic_level='G' group by academic_level;"; 
+		} else {
+			$query = $query." and year=".$year." and semester='Fall' and academic_level='G' group by academic_level;"; 
+		}
+		
+		//execute query and store results
+		$stmt = $db_server->query($query);
+		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+		$gNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+		
+		//obtain scholars
+		$query = "select academic_level, count(*) as count from semester";
+		//select joins
+		$query = $query.makeJoins($gender, $region, $country, $program, $college);
+		$query = $query." where";
+		//input where conditions
+		$query = $query.makeQuery('All', $gender, $region, $country, $program, $college);
+		//finish query
+		$pos = strpos($query, '=');
+		if ($pos === false){
+		$query = $query." year=".$year." and semester='Fall' and academic_level='S' group by academic_level;"; 
+		} else {
+			$query = $query." and year=".$year." and semester='Fall' and academic_level='S' group by academic_level;"; 
+		}
+		
+		//execute query and store results
+		$stmt = $db_server->query($query);
+		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+		$sNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+		
+		$total = $ugNum + $gNum + $sNum;
 		
 		//create chart
 		$response = $response."Highcharts.setOptions({ colors:".$colors." });"
 		."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { position: { align: 'right', verticalAlign: 'bottom'},"
 		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} },"
 		."title: { text: '".$reportName." (".$year.")' }, xAxis: { categories: ['Academic Level'] }, yAxis: { title: { text: 'Number of Students'} },"
-		."series: [{name: '".$colName1."', data: [".$val1."]}, { name: '".$colName2."', data: [".$val2."] }],  });";
+		."series: [{name: 'Undergraduate', data: [".$ugNum."]}, { name: 'Graduate', data: [".$gNum."] }, { name: 'Scholar', data: [".$sNum."] } ],  });";
   	}
   	
   	//student distribution by classification
@@ -309,19 +349,42 @@
 		$stmt = $db_server->query($query);
 		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
 		$pharmNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
+		
+		
+		//obtain Scholars
+		$query = "select classification as class, count(*) as count from semester";
+		//select joins
+		$query = $query.makeJoins($gender, $region, $country, $program, $college);
+		$query = $query." where";
+		//input where conditions
+		$query = $query.makeQuery($level, $gender, $region, $country, $program, $college);
+		//finish query
+		$pos = strpos($query, '=');
+		if ($pos === false){
+		$query = $query." year=".$year." and semester='Fall' and classification='Scholar' group by classification;"; 
+		} else {
+			$query = $query." and year=".$year." and semester='Fall' and classification='Scholar' group by classification;"; 
+		}
+		
+		echo ($query."      ");
+		
+		//execute query and store results
+		$stmt = $db_server->query($query);
+		$queryResult = $stmt->fetch_array(MYSQLI_ASSOC);
+		$scholarNum = ($queryResult['count'] > 0 ? $queryResult['count'] : 0);
 
-		$total = $freshmanNum + $sophomoreNum + $juniorNum + $seniorNum + $mastersNum + $doctoralNum + $lawNum + $pharmNum;
+		$total = $freshmanNum + $sophomoreNum + $juniorNum + $seniorNum + $mastersNum + $doctoralNum + $lawNum + $pharmNum + $scholarNum;
 		
 		//create chart
 		$response = $response."Highcharts.setOptions({ colors:".$colors." });"
-		."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { position: { align: 'right', verticalAlign: 'bottom'},"
+		."$('#graphContainer').highcharts({ chart: { type: 'column' }, credits: { position: { align: 'right', verticalAlign: 'bottom', y: .45},"
 		."text: 'Total Students:".$total."', href: '#', style: { cursor: 'cursor', color: '#3E576F', fontSize: '15px'} }," 
 		."title: { text: '".$reportName." (".$year.")' },"
 		."xAxis: { categories: ['Classification'] }, yAxis: { title: { text: 'Number of Students'} },"
 		."series: [{name: 'Freshman', data: [".$freshmanNum."]}, { name: 'Sophomore', data: [".$sophomoreNum."] },"
 		." { name: 'Junior', data: [".$juniorNum."] }, { name: 'Senior', data: [".$seniorNum."] },"
 		." { name: 'Masters', data: [".$mastersNum."] }, { name: 'Doctoral', data: [".$doctoralNum."] }, { name: 'Law', data: [".$lawNum."] },"
-		."{ name: 'PharmD', data: [".$pharmNum."] } ]});";
+		."{ name: 'PharmD', data: [".$pharmNum."] }, { name: 'Scholar', data: [".$scholarNum."] } ]});";
   		
   	}
   	

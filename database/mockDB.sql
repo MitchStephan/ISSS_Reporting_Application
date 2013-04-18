@@ -71,9 +71,9 @@
 
 	
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'abc123','UG','Sophomore','1','1','1','1');
+	VALUES('Fall',2012,'abc123','UG','Sophomore','1','3','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'bcd234','UG','Freshman','1','2','1','2');
+	VALUES('Fall',2012,'bcd234','UG','Freshman','1','4','1','2');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
 	VALUES('Fall',2012,'cde345','UG','Freshman','1','3','1','3');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
@@ -81,19 +81,19 @@
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
 	VALUES('Fall',2012,'hij890','UG','Junior','1','4','1','5');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'qrs123','UG','Senior','1','1','1','6');
+	VALUES('Fall',2012,'qrs123','UG','Senior','1','3','1','6');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'tuv123','G','Masters','1','1','1','7');
+	VALUES('Fall',2012,'tuv123','G','Masters','1','4','1','7');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'a123','G','Doctoral','1','1','1','8');
+	VALUES('Fall',2012,'a123','G','Doctoral','1','3','1','8');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'b123','G','Doctoral','1','1','1','9');
+	VALUES('Fall',2012,'b123','G','Doctoral','1','4','1','9');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'c123','G','Law','1','1','1','10');
+	VALUES('Fall',2012,'c123','G','Law','1','3','1','10');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'d123','G','PharmD','1','1','1','11');
+	VALUES('Fall',2012,'d123','G','PharmD','1','4','1','11');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'e123','UG','Junior','1','2','1','12');
+	VALUES('Fall',2012,'e123','UG','Junior','1','3','1','12');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
 	VALUES('Fall',2012,'f123','UG','senior','1','3','1','13');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
@@ -101,71 +101,71 @@
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
 	VALUES('Fall',2012,'h123','G','Masters','1','4','1','15');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'i123','G','Masters','1','1','1','16');
+	VALUES('Fall',2012,'i123','G','Masters','1','4','1','16');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'l123','G','Masters','1','1','1','17');
+	VALUES('Fall',2012,'l123','S','Scholar','1','2','1','17');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2012,'k123','G','Masters','1','1','1','18');
+	VALUES('Fall',2012,'k123','S','Scholar','1','2','1','18');
 	
 	
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2011,'def456','UG','Sophomore','1','1','1','1');
+	VALUES('Fall',2011,'def456','UG','Sophomore','1','2','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2011,'hij890','UG','Junior','1','1','1','2');
+	VALUES('Fall',2011,'hij890','UG','Junior','1','2','1','2');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2011,'qrs123','UG','Senior','1','1','1','1');
+	VALUES('Fall',2011,'qrs123','UG','Senior','1','3','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2011,'tuv123','G','Masters','1','1','1','1');
+	VALUES('Fall',2011,'tuv123','G','Masters','1','3','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2011,'a123','G','Doctoral','1','1','1','1');
+	VALUES('Fall',2011,'a123','G','Doctoral','1','4','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2011,'b123','G','Doctoral','1','1','1','4');
+	VALUES('Fall',2011,'b123','G','Doctoral','1','4','1','4');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2011,'c123','G','Law','1','1','1','5');
+	VALUES('Fall',2011,'c123','G','Law','1','1','3','5');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2011,'d123','G','PharmD','1','1','1','6');
+	VALUES('Fall',2011,'d123','G','PharmD','1','3','1','6');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2011,'e123','UG','Junior','1','1','1','2');
+	VALUES('Fall',2011,'e123','UG','Junior','1','4','1','2');
 
 	
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2010,'def456','UG','Sophomore','1','1','1','1');
+	VALUES('Fall',2010,'def456','UG','Sophomore','1','2','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2010,'hij890','UG','Junior','1','1','1','2');
+	VALUES('Fall',2010,'hij890','UG','Junior','1','2','1','2');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2010,'qrs123','UG','Senior','1','1','1','1');
+	VALUES('Fall',2010,'qrs123','UG','Senior','1','3','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2010,'tuv123','G','Masters','1','1','1','1');
+	VALUES('Fall',2010,'tuv123','G','Masters','1','3','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2010,'a123','G','Doctoral','1','1','1','1');
+	VALUES('Fall',2010,'a123','G','Doctoral','1','4','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2010,'b123','G','Doctoral','1','1','1','4');
+	VALUES('Fall',2010,'b123','G','Doctoral','1','4','1','4');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2010,'c123','G','Law','1','1','1','5');
+	VALUES('Fall',2010,'c123','G','Law','1','1','3','5');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2010,'d123','G','PharmD','1','1','1','6');
+	VALUES('Fall',2010,'d123','G','PharmD','1','2','1','6');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2010,'e123','UG','Junior','1','1','1','2');
+	VALUES('Fall',2010,'e123','UG','Junior','1','3','1','2');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2010,'f123','UG','Junior','1','1','1','2');
+	VALUES('Fall',2010,'f123','UG','Junior','1','4','1','2');
 	
 	
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2009,'def456','UG','Sophomore','1','1','1','1');
+	VALUES('Fall',2009,'def456','UG','Sophomore','1','3','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2009,'hij890','UG','Junior','1','1','1','2');
+	VALUES('Fall',2009,'hij890','UG','Junior','1','3','1','2');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2009,'qrs123','UG','Senior','1','1','1','1');
+	VALUES('Fall',2009,'qrs123','UG','Senior','1','4','1','1');
 	
 	
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2008,'def456','UG','Sophomore','1','1','1','1');
+	VALUES('Fall',2008,'def456','UG','Sophomore','1','2','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2008,'hij890','UG','Junior','1','1','1','2');
+	VALUES('Fall',2008,'hij890','UG','Junior','1','2','1','2');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2008,'qrs123','UG','Senior','1','1','1','1');
+	VALUES('Fall',2008,'qrs123','UG','Senior','1','3','1','1');
 	INSERT INTO semester (semester, year, ut_eid, academic_level, classification, passport,  program_code, visa_status, major_code)
-	VALUES('Fall',2008,'e123','UG','Junior','1','1','1','2');
+	VALUES('Fall',2008,'e123','UG','Junior','1','4','1','2');
 	
 
 	
@@ -210,7 +210,7 @@
 
 	
 	INSERT INTO programs (program_code, program_description)
-	VALUES('1','Both');
+	VALUES('1','Regular');
 	INSERT INTO programs (program_code, program_description)
 	VALUES('2','Scholars');
 	INSERT INTO programs (program_code, program_description)

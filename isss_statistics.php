@@ -129,7 +129,7 @@
       			  			//alert ("ready state is " + update_request.readyState);
 							if (update_request.readyState === 4) {
 								//alert ("status is " + update_request.status);
-								alert ("response is " + update_request.responseText);
+								//alert ("response is " + update_request.responseText);
 	  							if (update_request.status === 200) {
 									//$('#processing').fadeOut('slow');
 									var response = update_request.responseText;

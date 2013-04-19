@@ -2,5 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/borisvelt/Documents/Boris/Classes/CS347/ISSS_Reporting_Application/Parser/jnlp-loader-1.0.6.jar"/>
+	<classpathentry kind="lib" path="/Users/borisvelt/Documents/Boris/Classes/CS347/ISSS_Reporting_Application/Parser/super-csv-distribution-2/super-csv/super-csv-2.0.1.jar"/>
+	<classpathentry kind="lib" path="/Users/borisvelt/Documents/Boris/Classes/CS347/ISSS_Reporting_Application/Parser/mysql-connector-java-5.1.24/mysql-connector-java-5.1.24-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

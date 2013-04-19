@@ -218,6 +218,7 @@
 	INSERT INTO programs (program_code, program_description)
 	VALUES('4','Exchange');
 
+
 	
 	INSERT INTO immigration_info (visa_status_code, visa_status_description)
 	VALUES('1','okay');

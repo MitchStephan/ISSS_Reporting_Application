@@ -15,10 +15,10 @@
  	$year = $_POST['year']; 
  	$level = $_POST['academicLevel']; 
  	$gender = $_POST['gender']; 
- 	$region = $_POST['region']; 
- 	$country = $_POST['country'];
+ 	$region = strtolower($_POST['region']); 
+ 	$country = strtolower($_POST['country']);
  	$program = $_POST['program']; 
- 	$college = $_POST['college']; 
+ 	$college = strtolower($_POST['college']); 
  	
  	$errorCount = 0;
  	$colors = "['#FF9900', '#EBB461' , '#FFCC00', '#D0D0D0', '#FF3333', '#FF6666', '#00CC99', '#CCFF99', '#CC9966', '#CC6600', '#993333']";
@@ -85,10 +85,10 @@
 		}
 		
 		if ($program != 'All' && !$and && $program == '1') {
-			$q = $q." (programs.program_code='1' or programs.program_code='3' or programs.program_code='4') and semester.program_code=programs.program_code";
+			$q = $q." (programs.program_code='1' or programs.program_code='3' or programs.program_code='4' programs.program_code='5') and semester.program_code=programs.program_code";
 			$and = true;
 		} else if ($program != 'All' && $program == '1') {
-			$q = $q." and (programs.program_code='1' or programs.program_code='3' or programs.program_code='4') and semester.program_code=programs.program_code";
+			$q = $q." and (programs.program_code='1' or programs.program_code='3' or programs.program_code='4' or programs.program_code='5') and semester.program_code=programs.program_code";
 		} else if ($program != 'All' && !$and) {
 			$q = $q." programs.program_code='".$program."' and semester.program_code=programs.program_code";
 			$and = true;
@@ -198,9 +198,9 @@
 		//finish query
 		$pos = strpos($query, '=');
 		if ($pos === false){
-		$query = $query." year=".$year." and semester='Fall' and classification='Freshman' group by classification;"; 
+		$query = $query." year=".$year." and semester='Fall' and classification='freshman' group by classification;"; 
 		} else {
-			$query = $query." and year=".$year." and semester='Fall' and classification='Freshman' group by classification;"; 
+			$query = $query." and year=".$year." and semester='Fall' and classification='freshman' group by classification;"; 
 		}
 		
 		echo ($query."      ");
@@ -220,9 +220,9 @@
 		//finish query
 		$pos = strpos($query, '=');
 		if ($pos === false){
-		$query = $query." year=".$year." and semester='Fall' and classification='Sophomore' group by classification;"; 
+		$query = $query." year=".$year." and semester='Fall' and classification='sophomore' group by classification;"; 
 		} else {
-			$query = $query." and year=".$year." and semester='Fall' and classification='Sophomore' group by classification;"; 
+			$query = $query." and year=".$year." and semester='Fall' and classification='sophomore' group by classification;"; 
 		}
 		
 		//execute query and store results
@@ -240,9 +240,9 @@
 		//finish query
 		$pos = strpos($query, '=');
 		if ($pos === false){
-		$query = $query." year=".$year." and semester='Fall' and classification='Junior' group by classification;"; 
+		$query = $query." year=".$year." and semester='Fall' and classification='junior' group by classification;"; 
 		} else {
-			$query = $query." and year=".$year." and semester='Fall' and classification='Junior' group by classification;"; 
+			$query = $query." and year=".$year." and semester='Fall' and classification='junior' group by classification;"; 
 		}
 		
 		//execute query and store results
@@ -260,9 +260,9 @@
 		//finish query
 		$pos = strpos($query, '=');
 		if ($pos === false){
-		$query = $query." year=".$year." and semester='Fall' and classification='Senior' group by classification;"; 
+		$query = $query." year=".$year." and semester='Fall' and classification='senior' group by classification;"; 
 		} else {
-			$query = $query." and year=".$year." and semester='Fall' and classification='Senior' group by classification;"; 
+			$query = $query." and year=".$year." and semester='Fall' and classification='senior' group by classification;"; 
 		}
 		
 		//execute query and store results
@@ -280,9 +280,9 @@
 		//finish query
 		$pos = strpos($query, '=');
 		if ($pos === false){
-		$query = $query." year=".$year." and semester='Fall' and classification='Masters' group by classification;"; 
+		$query = $query." year=".$year." and semester='Fall' and classification='masters' group by classification;"; 
 		} else {
-			$query = $query." and year=".$year." and semester='Fall' and classification='Masters' group by classification;"; 
+			$query = $query." and year=".$year." and semester='Fall' and classification='masters' group by classification;"; 
 		}
 		
 		//execute query and store results
@@ -300,9 +300,9 @@
 		//finish query
 		$pos = strpos($query, '=');
 		if ($pos === false){
-		$query = $query." year=".$year." and semester='Fall' and classification='Doctoral' group by classification;"; 
+		$query = $query." year=".$year." and semester='Fall' and classification='doctoral' group by classification;"; 
 		} else {
-			$query = $query." and year=".$year." and semester='Fall' and classification='Doctoral' group by classification;"; 
+			$query = $query." and year=".$year." and semester='Fall' and classification='doctoral' group by classification;"; 
 		}
 		
 		//execute query and store results
@@ -320,9 +320,9 @@
 		//finish query
 		$pos = strpos($query, '=');
 		if ($pos === false){
-		$query = $query." year=".$year." and semester='Fall' and classification='Law' group by classification;"; 
+		$query = $query." year=".$year." and semester='Fall' and classification='law' group by classification;"; 
 		} else {
-			$query = $query." and year=".$year." and semester='Fall' and classification='Law' group by classification;"; 
+			$query = $query." and year=".$year." and semester='Fall' and classification='law' group by classification;"; 
 		}
 		
 		//execute query and store results
@@ -340,9 +340,9 @@
 		//finish query
 		$pos = strpos($query, '=');
 		if ($pos === false){
-		$query = $query." year=".$year." and semester='Fall' and classification='PharmD' group by classification;"; 
+		$query = $query." year=".$year." and semester='Fall' and classification='pharmd' group by classification;"; 
 		} else {
-			$query = $query." and year=".$year." and semester='Fall' and classification='PharmD' group by classification;"; 
+			$query = $query." and year=".$year." and semester='Fall' and classification='pharmd' group by classification;"; 
 		}
 		
 		//execute query and store results
@@ -361,9 +361,9 @@
 		//finish query
 		$pos = strpos($query, '=');
 		if ($pos === false){
-		$query = $query." year=".$year." and semester='Fall' and classification='Scholar' group by classification;"; 
+		$query = $query." year=".$year." and semester='Fall' and classification='scholar' group by classification;"; 
 		} else {
-			$query = $query." and year=".$year." and semester='Fall' and classification='Scholar' group by classification;"; 
+			$query = $query." and year=".$year." and semester='Fall' and classification='scholar' group by classification;"; 
 		}
 		
 		echo ($query."      ");

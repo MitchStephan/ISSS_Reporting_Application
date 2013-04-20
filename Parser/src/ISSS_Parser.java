@@ -15,21 +15,13 @@ import java.util.*;
 import java.io.*;
 
 //jdbc connector
+import java.sql.*;
 import com.mysql.*;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
-/* 
- * JWSFileChooserDemo.java must be compiled with jnlp.jar.  For
- * example, if jnlp.jar is in a subdirectory named jars:
- * 
- *   javac -classpath .:jars/jnlp.jar JWSFileChooserDemo.java [UNIX]
- *   javac -classpath .;jars/jnlp.jar JWSFileChooserDemo.java [Microsoft Windows]
- *
- * JWSFileChooserDemo.java requires the following files when executing:
- *   images/Open16.gif
- *   images/Save16.gif
- */
+/* export CLASSPATH=$CLASSPATH:"/u/z/users/cs105-s13/bveltman/ISSS_Application/Parser/mysql-connector-java-5.1.24/mysql-connector-java-5.1.24-bin.jar"  */
+
 public class ISSS_Parser extends JPanel implements ActionListener {
 	JButton uploadButton;
 	JTextArea log;
@@ -87,9 +79,8 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 			//parse selected file
 			try {
 				log.append("\nParsing file and generating DLL:");
-				String dll = parse(fileScanner);
+				parse(fileScanner);
 				log.append("\nParsing completed.");
-				writeToDB(dll);
 			} catch (IOException e1) {
 				log.append("\nError while parsing file. Parse aborted.");
 				log.append("\n" + e1.toString());
@@ -102,36 +93,37 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 		}
 	}
 	
-	void writeToDB (String dll){
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			log.append("\n JDBC Driver not found.");
-			log.append("\n" + e.toString());
-		}
-	 
-		Connection connection = null;
-		String url = "jdbc:mysql://z/cs105_s13_bveltman";
-		String username = "bveltman";
-		String pass = "kKOcaj59il";
-	 
-		try {
-			connection = (Connection) DriverManager
-			.getConnection(url, username, pass);
-			log.append("\nConnected to Database.");
-			Statement statement = (Statement) connection.createStatement(); 
-			log.append("\nWriting to Databas...");
-			statement.executeUpdate(dll);
-			connection.commit();
-			log.append("\nData Comitted.");
-		} catch (SQLException e) {
-			log.append("\nConnection Failed! \n" + e.toString() );
-			log.append("\nPlease copy the Insert statements above and paste them to the MySQL Database or try to run the file again.");
-			e.printStackTrace();
-			return;
-		}
-	 
-	}
+//	void writeToDB (String dll){
+//		try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//		} catch (ClassNotFoundException e) {
+//			log.append("\n JDBC Driver not found.");
+//			log.append("\n" + e.toString());
+//		}
+//	 
+//		Connection connection = null;
+//		String url = "jdbc:mysql://z.cs.utexas.edu:3306/cs105_s13_bveltman";
+//		String username = "bveltman";
+//		String pass = "kKOcaj59il";
+//	 
+//		try {
+//			connection = (Connection) DriverManager
+//			.getConnection(url, username, pass);
+//			log.append("\nConnected to Database.");
+//			Statement statement = (Statement) connection.createStatement(); 
+//			log.append("\nWriting to Databas...");
+//			statement.executeUpdate(dll);
+//			connection.commit();
+//			log.append("\nData Comitted.");
+//			connection.close();
+//		} catch (SQLException e) {
+//			log.append("\nTransaction Failed! \n" + e.toString() );
+//			log.append("\nPlease copy the Insert statements above and paste them to the MySQL Database or try to run the file again.");
+//			e.printStackTrace();
+//			return;
+//		}
+//	 
+//	}
 
 	/**
 	 * @param filePath is the path of the file selected by the user
@@ -141,8 +133,29 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 		return filePath.toLowerCase().endsWith(".csv");
 	}
 
-	String parse (Scanner scanner) throws IOException{
+	void parse (Scanner scanner) throws IOException{
 		String dll = new String ("");
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			log.append("\n JDBC Driver not found.");
+			log.append("\n" + e.toString());
+		}
+	 
+		Connection connection = null;
+		String url = "jdbc:mysql://z.cs.utexas.edu:3306/cs105_s13_bveltman";
+		String username = "bveltman";
+		String pass = "kKOcaj59il";
+	 
+		try {
+			connection = (Connection) DriverManager
+			.getConnection(url, username, pass);
+		}  catch (SQLException e) {
+			log.append("\nTransaction Failed! \n" + e.toString() );
+			//log.append("\nPlease copy the Insert statements above and paste them to the MySQL Database or try to run the file again.");
+			e.printStackTrace();
+		}
 
 		if (scanner.hasNextLine()){
 			//read header line
@@ -172,12 +185,11 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 				data[i] = data[i].toLowerCase();
 				//log.append("\ndata at index " + i + " is " + data[i]);
 			}
-			dll += createInserts (data);
+			createInserts (data, connection);
 		}
-		return dll;
 	}
 	
-	private String createInserts (String[] data){
+	private String createInserts (String[] data, Connection connection) {
 		String inserts = "";
 		//organize data
 		String lastName = data[0].substring(1);
@@ -208,11 +220,22 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 		//log.append("\nexchange: " + exchange);
 		
 		//build insert for student table
-		inserts += "insert into student (ut_eid, last_name, first_name, gender, country_code) values (" + "'" +
+		inserts = "insert into student (ut_eid, last_name, first_name, gender, country_code) values (" + "'" +
 		eid + "'" + ", " + "'" + lastName + "'" + ", " + "'" + firstName + "'" + ", " + "'" + gender + "'" + ", " + "'" + countryCode + "'" + "); ";
+		Statement statement;
+		try {
+			statement = (Statement) connection.createStatement();
+			log.append("\nWriting to Databas...");
+			statement.executeUpdate(inserts);
+			log.append("\nData Comitted.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
 		
 		//build insert for semester table
-		inserts += "insert into semester (semester, year, ut_eid, academic_level, classification, program_code, major_code, major_code2, visa_status ) values ('Fall', ";
+		inserts = "insert into semester (semester, year, ut_eid, academic_level, classification, program_code, major_code, major_code2, visa_status ) values ('Fall', ";
 		inserts += year + ", ";
 		inserts += "'" + eid + "'" + ", ";
 		//insert academic_level
@@ -226,7 +249,7 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 		else {
 			inserts += "'UG', ";
 		}
-		inserts += (type == "VS")? "'Scholar', " : "'" + classification + "'" + ", ";
+		inserts += (type.equalsIgnoreCase("VS"))? "'scholar', " : "'" + classification + "'" + ", ";
 		//insert program
 		if (type.equalsIgnoreCase("VS")) {
 			inserts += "2, ";
@@ -244,13 +267,32 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 			inserts += "1, ";
 		}
 		inserts += majorCode + ", 0, 0); ";
+		try {
+			statement = (Statement) connection.createStatement();
+			log.append("\nWriting to Databas...");
+			statement.executeUpdate(inserts);
+			log.append("\nData Comitted.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		
 		
 		//make insert into academic_info
-		inserts += "insert into academic_info (major_code, school_code, school_name) values (" +
+		inserts = "insert into academic_info (major_code, school_code, school_name) values (" +
 		majorCode + ", " + schoolCode + ", " + "'" + schoolName + "'" + " ); ";
+		try {
+			statement = (Statement) connection.createStatement();
+			log.append("\nWriting to Databas...");
+			statement.executeUpdate(inserts);
+			log.append("\nData Comitted.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		
-		log.append("\n" + inserts);
+		
+		//log.append("\n" + inserts);
 		
 		return inserts;
 	}

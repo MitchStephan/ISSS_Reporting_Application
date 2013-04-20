@@ -228,6 +228,21 @@ ALTER TABLE semester
 ;
 
 
+INSERT INTO programs (program_code, program_description)
+VALUES('1','regular');
+INSERT INTO programs (program_code, program_description)
+VALUES('2','scholars');
+INSERT INTO programs (program_code, program_description)
+VALUES('3','sponsored');
+INSERT INTO programs (program_code, program_description)
+VALUES('4','exchange');
+INSERT INTO programs (program_code, program_description)
+VALUES('5','both');
+
+
+INSERT INTO immigration_info (visa_status_code, visa_status_description)
+VALUES('0','default');
+
 
 -- Oracle SQL Developer Data Modeler Summary Report: 
 -- 

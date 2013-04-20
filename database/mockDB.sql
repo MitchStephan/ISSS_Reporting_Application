@@ -217,9 +217,12 @@
 	VALUES('3','Sponsored');
 	INSERT INTO programs (program_code, program_description)
 	VALUES('4','Exchange');
+	INSERT INTO programs (program_code, program_description)
+	VALUES('5','Both');
 
 
-	
+	INSERT INTO immigration_info (visa_status_code, visa_status_description)
+	VALUES('0','default');
 	INSERT INTO immigration_info (visa_status_code, visa_status_description)
 	VALUES('1','okay');
 	INSERT INTO immigration_info (visa_status_code, visa_status_description)

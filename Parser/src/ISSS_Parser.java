@@ -1,64 +1,23 @@
 
-/*
- * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *
- *   - Neither the name of Oracle or the names of its
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
- * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-
 //GUI components
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import javax.swing.*;
-import javax.swing.filechooser.*;
-import javax.swing.SwingUtilities;
-import javax.jnlp.*;
 
-//parser components
-//import org.supercsv.cellprocessor.Optional;
-//import org.supercsv.cellprocessor.ParseDate;
-//import org.supercsv.cellprocessor.constraint.NotNull;
-//import org.supercsv.cellprocessor.ift.CellProcessor;
-//import org.supercsv.io.CsvBeanReader;
-//import org.supercsv.io.ICsvBeanReader;
-//import org.supercsv.prefs.CsvPreference;
-//import org.supercsv.*;
 
 //File and Scanner components
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.*;
 import java.io.*;
 
 //jdbc connector
 import com.mysql.*;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
 
 /* 
  * JWSFileChooserDemo.java must be compiled with jnlp.jar.  For
@@ -120,18 +79,20 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 			Scanner fileScanner = new Scanner ("");
 			try {
 				fileScanner = new Scanner(file);
-				log.append("\nFile succesfully scanned");
+				log.append("\nFile succesfully scanned.");
 			} catch (FileNotFoundException e1) {
 				log.append("\nFile selected at " + filePath + " could not be found.");
 			}
 
 			//parse selected file
 			try {
-				log.append("\nParsing file...");
+				log.append("\nParsing file and generating DLL:");
 				String dll = parse(fileScanner);
 				log.append("\nParsing completed.");
+				writeToDB(dll);
 			} catch (IOException e1) {
 				log.append("\nError while parsing file. Parse aborted.");
+				log.append("\n" + e1.toString());
 			}
 			
 			fileScanner.close();
@@ -139,6 +100,37 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 		} else {
 			log.append("\nThe file selected did not have a csv extension. \nRequest aborted. \nPlease select a new file.");
 		}
+	}
+	
+	void writeToDB (String dll){
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			log.append("\n JDBC Driver not found.");
+			log.append("\n" + e.toString());
+		}
+	 
+		Connection connection = null;
+		String url = "jdbc:mysql://z/cs105_s13_bveltman";
+		String username = "bveltman";
+		String pass = "kKOcaj59il";
+	 
+		try {
+			connection = (Connection) DriverManager
+			.getConnection(url, username, pass);
+			log.append("\nConnected to Database.");
+			Statement statement = (Statement) connection.createStatement(); 
+			log.append("\nWriting to Databas...");
+			statement.executeUpdate(dll);
+			connection.commit();
+			log.append("\nData Comitted.");
+		} catch (SQLException e) {
+			log.append("\nConnection Failed! \n" + e.toString() );
+			log.append("\nPlease copy the Insert statements above and paste them to the MySQL Database or try to run the file again.");
+			e.printStackTrace();
+			return;
+		}
+	 
 	}
 
 	/**
@@ -159,61 +151,109 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 		
 		String[] data;
 		
-		//currently 11 indexes at most per row of data
+		//currently 15 indexes per row of data
 		//data at index 0 is last name
 		//data at index 1 is first name
 		//data at index 2 is eid
 		//data at index 3 is type of student (regular or scholar)
-		//data at index 4 is LSE
-		//data at index 5 is marital status
-		//data at index 6 is COCKERELL SCHOOL OF ENGINEERING
-		//data at index 7 is country
-		//data at index 8 is region
-		//data at index 9 is special category code
-		//data at index 10 is irregular program code
+		//data at index 4 is year
+		//data at index 5 is gender
+		//data at index 6 is classification
+		//data at index 7 is major code
+		//data at index 8 is school code
+		//data at index 9 is school name
+		//data at index 10 is country code
+		//data at index 11 is special category code
+		//data at index 12 is irregular program code
 		while (scanner.hasNextLine()) {
 			String row = scanner.nextLine();
 			data = row.split(",", -1);
-			//code to print parsed data on console
-//			for(int i =0; i < data.length ; i++){
-//				log.append("\ndata at index " + i + " is " + data[i]);
-//			}
-			
-			
+			for(int i = 0; i < data.length ; i++){
+				data[i] = data[i].toLowerCase();
+				//log.append("\ndata at index " + i + " is " + data[i]);
+			}
+			dll += createInserts (data);
 		}
-
 		return dll;
 	}
-
-	//	private static CellProcessor[] getProcessors() {
-	//
-	//		final CellProcessor[] processors = new CellProcessor[] { 
-	//				new NotNull(), //NAME
-	//				new NotNull(), //UT-EID
-	//				new NotNull(), //Type Stdnt
-	//				new NotNull(), //LSE
-	//				new NotNull(), //GENDER
-	//				new NotNull(), //PSEUDO SCHOOL EXACT NAME
-	//				new Optional(), //CLASSIFICATION-DESC
-	//				new NotNull(), //COUNTRY-OF-CITIZ-NAME
-	//				new NotNull(), //REGION-OF-CITIZ-NAME
-	//				new Optional(), //SPECIAL-CATEGORY-CODE
-	//				new Optional(), //IRREG-PGM-CODE
-	//		};
-	//
-	//		return processors;
-	//	}
-
-	//	/** Returns an ImageIcon, or null if the path was invalid. */
-	//	protected static ImageIcon createImageIcon(String path) {
-	//		java.net.URL imgURL = ISSS_Parser.class.getResource(path);
-	//		if (imgURL != null) {
-	//			return new ImageIcon(imgURL);
-	//		} else {
-	//			System.err.println("Couldn't find file: " + path);
-	//			return null;
-	//		}
-	//	}
+	
+	private String createInserts (String[] data){
+		String inserts = "";
+		//organize data
+		String lastName = data[0].substring(1);
+		//log.append("\nlastName: " + lastName);
+		String firstName = data[1].substring(0, data[1].length() - 1);
+		//log.append("\nfirstName: " + firstName);
+		String eid = data[2];
+		//log.append("\neid: " + eid);
+		String type = data[3];
+		//log.append("\ntype: " + type);
+		int year = Integer.parseInt(data[4]);
+		//log.append("\nyear: " + year);
+		String gender = data[5];
+		//log.append("\ngender: " + gender);
+		String classification = data[6];
+		//log.append("\nclassification: " + classification);
+		int majorCode = Integer.parseInt(data[7]);
+		//log.append("\nmajorCode: " + majorCode);
+		int schoolCode = Integer.parseInt(data[8]);
+		//log.append("\nschoolCode: " + schoolCode);
+		String schoolName = data[9];
+		//log.append("\nschoolName: " + schoolName);
+		int countryCode = Integer.parseInt(data[10]);
+		//log.append("\ncountryCode: " + countryCode);
+		String sponsored = data[11];
+		//log.append("\nsponsored: " + sponsored);
+		String exchange = data[12];
+		//log.append("\nexchange: " + exchange);
+		
+		//build insert for student table
+		inserts += "insert into student (ut_eid, last_name, first_name, gender, country_code) values (" + "'" +
+		eid + "'" + ", " + "'" + lastName + "'" + ", " + "'" + firstName + "'" + ", " + "'" + gender + "'" + ", " + "'" + countryCode + "'" + "); ";
+		
+		//build insert for semester table
+		inserts += "insert into semester (semester, year, ut_eid, academic_level, classification, program_code, major_code, major_code2, visa_status ) values ('Fall', ";
+		inserts += year + ", ";
+		inserts += "'" + eid + "'" + ", ";
+		//insert academic_level
+		if (type.equalsIgnoreCase("VS")){
+			inserts += "'S', ";
+		}
+		else if (!classification.equalsIgnoreCase("FRESHMEN") &&  !classification.equalsIgnoreCase("SOPHOMORE") 
+				&& !classification.equalsIgnoreCase("JUNIOR") && !classification.equalsIgnoreCase("SENIOR")){
+			inserts += "'G', ";
+		}
+		else {
+			inserts += "'UG', ";
+		}
+		inserts += (type == "VS")? "'Scholar', " : "'" + classification + "'" + ", ";
+		//insert program
+		if (type.equalsIgnoreCase("VS")) {
+			inserts += "2, ";
+		} 
+		else if (sponsored.equalsIgnoreCase("x") && exchange.equalsIgnoreCase("A0400")) {
+			inserts += "5, ";
+		}
+		else if (sponsored.equalsIgnoreCase("x")){
+			inserts += "3, ";
+		}
+		else if (exchange.equalsIgnoreCase("A0400")){
+			inserts += "4, ";
+		}
+		else {
+			inserts += "1, ";
+		}
+		inserts += majorCode + ", 0, 0); ";
+		
+		
+		//make insert into academic_info
+		inserts += "insert into academic_info (major_code, school_code, school_name) values (" +
+		majorCode + ", " + schoolCode + ", " + "'" + schoolName + "'" + " ); ";
+		
+		log.append("\n" + inserts);
+		
+		return inserts;
+	}
 
 	/**
 	 * Create the GUI and show it.  For thread safety,

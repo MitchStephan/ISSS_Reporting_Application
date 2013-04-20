@@ -550,7 +550,7 @@
   				
   				<!-- potential room for footer -->
   				<br /> <br />
-  				
+  				<!-- <?php echo ('<html><p>'.$_SERVER['SERVER_ADDR'].'</p></html>'); ?> -->
   			</div> <!-- end mainContent -->
   		</div> <!-- end container -->
   	</body>

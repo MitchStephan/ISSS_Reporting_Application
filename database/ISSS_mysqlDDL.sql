@@ -243,6 +243,27 @@ VALUES('5','both');
 INSERT INTO immigration_info (visa_status_code, visa_status_description)
 VALUES('0','default');
 
+INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
+VALUES('1', 'China', 'Asia', '1');
+INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
+VALUES('2', 'Mexico', 'North America', '2');
+INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
+VALUES('3', 'South Korea', 'Asia', '1');
+INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
+VALUES('4', 'France', 'Europe', '3');
+INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
+VALUES('5', 'Jamaica', 'Latin America and Caribbean', '3');
+INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
+VALUES('6', 'Guam', 'Oceana', '1');
+INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
+VALUES('7', 'Israel', 'Middle East', '4');
+INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
+VALUES('8', 'Jordan', 'Middle East', '4');
+INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
+VALUES('9', 'Lebanon', 'Middle East', '4');
+INSERT INTO country(country_code, country_name, region_of_citizenship, region_code)
+VALUES('10', 'Nigeria', 'Africa', '10');
+
 
 -- Oracle SQL Developer Data Modeler Summary Report: 
 -- 

@@ -15,10 +15,10 @@
  	$year = $_POST['year']; 
  	$level = $_POST['academicLevel']; 
  	$gender = $_POST['gender']; 
- 	$region = strtolower($_POST['region']); 
- 	$country = strtolower($_POST['country']);
+ 	$region = ( $_POST['region'] == 'All' ? $_POST['region'] : strtolower($_POST['region']) ); 
+ 	$country = ( $_POST['country'] == 'All' ? $_POST['country'] : strtolower($_POST['country']) ); 
  	$program = $_POST['program']; 
- 	$college = strtolower($_POST['college']); 
+ 	$college = ( $_POST['college'] == 'All' ? $_POST['college'] : strtolower($_POST['college']) );
  	
  	$errorCount = 0;
  	$colors = "['#FF9900', '#EBB461' , '#FFCC00', '#D0D0D0', '#FF3333', '#FF6666', '#00CC99', '#CCFF99', '#CC9966', '#CC6600', '#993333']";
@@ -85,10 +85,15 @@
 		}
 		
 		if ($program != 'All' && !$and && $program == '1') {
-			$q = $q." (programs.program_code='1' or programs.program_code='3' or programs.program_code='4' programs.program_code='5') and semester.program_code=programs.program_code";
+			$q = $q." (programs.program_code='1' or programs.program_code='3' or programs.program_code='4' or programs.program_code='5') and semester.program_code=programs.program_code";
 			$and = true;
 		} else if ($program != 'All' && $program == '1') {
 			$q = $q." and (programs.program_code='1' or programs.program_code='3' or programs.program_code='4' or programs.program_code='5') and semester.program_code=programs.program_code";
+		} else if ($program != 'All' && !$and && ($program == '3' || $program == '4') ) {
+			$q = $q." (programs.program_code='".$program."' or programs.program_code='5') and semester.program_code=programs.program_code";
+			$and = true;
+		} else if ($program != 'All' && ($program == '3' || $program == '4') ) {
+			$q = $q." and (programs.program_code='".$program."' or programs.program_code='5') and semester.program_code=programs.program_code";
 		} else if ($program != 'All' && !$and) {
 			$q = $q." programs.program_code='".$program."' and semester.program_code=programs.program_code";
 			$and = true;
@@ -127,7 +132,7 @@
 			$query = $query." and year=".$year." and semester='Fall' and academic_level='UG' group by academic_level;"; 
 		}
 		
-		//echo ($query."   ");
+		echo ($query."   ");
 		
 		$total = 0;
 		
@@ -483,10 +488,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Cockrell School of Engineering'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'cockrell school of engineering'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Cockrell School of Engineering'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'cockrell school of engineering'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -508,10 +513,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Communication'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of communication'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Communication'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of communication'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -533,10 +538,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Education'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of education'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Education'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of education'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -558,10 +563,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Fine Arts'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of fine arts'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Fine Arts'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of fine arts'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -583,10 +588,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Liberal Arts'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of liberal arts'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Liberal Arts'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of liberal arts'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -608,10 +613,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Natural Sciences'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of natural sciences'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Natural Sciences'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of natural sciences'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -633,10 +638,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Pharmacy'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of pharmacy'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'College of Pharmacy'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'college of pharmacy'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -658,10 +663,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Dell Medical School'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'dell medical school'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Dell Medical School'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'dell medical school'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -683,10 +688,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Graduate School'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'graduate school'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Graduate School'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'graduate school'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -708,10 +713,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Jackson School of Geosciences'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'jackson school of geosciences'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Jackson School of Geosciences'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'jackson school of geosciences'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -733,10 +738,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Lyndon B. Johnson School of Public Affairs'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'lyndon b. johnson school of public affairs'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'Lyndon B. Johnson School of Public Affairs'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'lyndon b. johnson school of public affairs'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -758,10 +763,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'McCombs School of Business'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'mccombs school of business'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'McCombs School of Business'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'mccombs school of business'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -783,10 +788,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Architecture'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of architecture'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Architecture'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of architecture'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -808,10 +813,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Information'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of information'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Information'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of information'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -834,10 +839,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Law'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of law'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Law'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of law'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -859,10 +864,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Nursing'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of nursing'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Nursing'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of nursing'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -884,10 +889,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Social Work'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of social work'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Social Work'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of social work'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -909,10 +914,10 @@
  		//finish query
  		$pos = strpos($query, '=');
  		if ($pos === false){
- 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Undergraduate Studies'
+ 			$query = $query." year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of undergraduate studies'
  			group by academic_info.school_name;";
  		} else {
- 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'School of Undergraduate Studies'
+ 			$query = $query." and year=".$year." and semester.major_code = academic_info.major_code and academic_info.school_name = 'school of undergraduate studies'
  			group by academic_info.school_name;"; 
  		}
  		
@@ -954,9 +959,9 @@
  		//finish query
  		$pos = strpos($query, '=');
 		if ($pos === false){
- 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Asia' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'asia' and semester = 'Fall' group by country.Region_of_citizenship;";
  		} else {
- 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Asia' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'asia' and semester = 'Fall' group by country.Region_of_citizenship;"; 
  		}
 		
 		//echo ($query."       ");
@@ -977,9 +982,9 @@
  		//finish query
  		$pos = strpos($query, '=');
 		if ($pos === false){
- 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Africa' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'africa' and semester = 'Fall' group by country.Region_of_citizenship;";
  		} else {
- 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Africa' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'africa' and semester = 'Fall' group by country.Region_of_citizenship;"; 
  		}
 		
 		//echo ($query."       ");
@@ -1000,9 +1005,9 @@
  		//finish query
  		$pos = strpos($query, '=');
 		if ($pos === false){
- 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Latin America and Caribbean' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'latin america and caribbean' and semester = 'Fall' group by country.Region_of_citizenship;";
  		} else {
- 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Latin America and Caribbean' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'latin america and caribbean' and semester = 'Fall' group by country.Region_of_citizenship;"; 
  		}
 		
 		//echo ($query."       ");
@@ -1023,9 +1028,9 @@
  		//finish query
  		$pos = strpos($query, '=');
 		if ($pos === false){
- 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Middle East' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'middle east' and semester = 'Fall' group by country.Region_of_citizenship;";
  		} else {
- 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Middle East' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'middle east' and semester = 'Fall' group by country.Region_of_citizenship;"; 
  		}
 		
 		//echo ($query."       ");
@@ -1046,9 +1051,9 @@
  		//finish query
  		$pos = strpos($query, '=');
 		if ($pos === false){
- 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'North America' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'north america' and semester = 'Fall' group by country.Region_of_citizenship;";
  		} else {
- 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'North America' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'north america' and semester = 'Fall' group by country.Region_of_citizenship;"; 
  		}
 		
 		//echo ($query."       ");
@@ -1069,9 +1074,9 @@
  		//finish query
  		$pos = strpos($query, '=');
 		if ($pos === false){
- 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Oceana' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'oceana' and semester = 'Fall' group by country.Region_of_citizenship;";
  		} else {
- 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Oceana' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'oceana' and semester = 'Fall' group by country.Region_of_citizenship;"; 
  		}
 		
 		//echo ($query."       ");
@@ -1092,9 +1097,9 @@
  		//finish query
  		$pos = strpos($query, '=');
 		if ($pos === false){
- 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Europe' and semester = 'Fall' group by country.Region_of_citizenship;";
+ 			$query = $query." year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'europe' and semester = 'Fall' group by country.Region_of_citizenship;";
  		} else {
- 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'Europe' and semester = 'Fall' group by country.Region_of_citizenship;"; 
+ 			$query = $query." and year=".$year." and semester.ut_eid = student.ut_eid and country.country_code = student.country_code and country.Region_of_citizenship = 'europe' and semester = 'Fall' group by country.Region_of_citizenship;"; 
  		}
 		
 		//echo ($query."       ");
@@ -1202,7 +1207,7 @@
 		{ name: '".$nameArray[6]."', data: [".$countArray[6]."] }, { name: '".$nameArray[7]."', data: [".$countArray[7]."] },
 		{ name: '".$nameArray[8]."', data: [".$countArray[8]."] }, { name: '".$nameArray[9]."', data: [".$countArray[9]."] } ]});";
  	}	
-	//5 year enrollement trends
+	//enrollement trends
  	else if ($report == '7'){
  		//obtain trends for last 5 years
  		$query = "select semester.year as year, count(*) as count from semester";

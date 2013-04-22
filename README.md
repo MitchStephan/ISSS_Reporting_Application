@@ -109,11 +109,15 @@ The JDBC driver allows java applications to communicate with a mysql database.
 - bin - the bin folder contains the ISSS_Parser.class file which run the desktop application
 To run this file on the command line from the bin folder (note, the $ is the command line prompt and not part of the command):
 
-```$ export CLASSPATH=$CLASSPATH:"you fill the explicit path to here/Parser/mysql-connector-java-5.1.24/mysql-connector-java-5.1.24-bin.jar"```
+```
+$ export CLASSPATH=$CLASSPATH:"you fill the explicit path to here/Parser/mysql-connector-java-5.1.24/mysql-connector-java-5.1.24-bin.jar"
+```
 
 this sets the classPath for java to find the JDBC driver needed to run the application.
 
+```
 $ java ISSS_Parser
+```
 
 - src - contains ISSS_Parser.java the source code for the desktop application
 look at the documentation at docs/index.html for a detailed description of the application.

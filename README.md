@@ -5,19 +5,20 @@ The full contents of the application are found in the ISSS_Reporting_Application
 This file provides basic installation instructions along with a description of the application's components.
 
 The ISSS_Reporting_Application Folder should contains the following folders and files:
-1.isss_statistics.php
-2.createChart.php
-3.database folder
-4.images folder
-5. js folder
-6. Parser folder
-7. styles folder 
-8. Readme file
+
+- isss_statistics.php
+- createChart.php
+- database folder
+- images folder
+- js folder
+- Parser folder
+- styles folder 
+- Readme file
 
 isss_statistics.php
 ===================
 This file contains the code for the web application user interface (hereafter, UI). The UI is supported
-by Google's jquery library (ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js) and the highcharts javascript library 
+by Google's jquery library (http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js) and the highcharts javascript library 
 (http://www.highcharts.com). There are 4 javascript functions that have been written to support the UI.
 
 showFilters (reportVal) - is called from within runReport(), which is activated on selection change 
@@ -58,18 +59,18 @@ database folder
 The database folder contains files that are relevant to the mysql database associated with the application
 The following files should be found within the database folder:
 
-a. DBInfo.php - contains the hostname, username, database name, and password for the mysql database associated with the application.
+- DBInfo.php - contains the hostname, username, database name, and password for the mysql database associated with the application.
 This file must be current, as both  isss_statistics.php and createChart.php rely on this file to make connection with the database. 
 
-b. ISSS_projectDDL.sql - contains the ddl to create the schema of the database queried by the application. The file also contains the 
+- ISSS_projectDDL.sql - contains the ddl to create the schema of the database queried by the application. The file also contains the 
 dll to prime the program, country, and immigration_info tables. 
 
-c. projectLogicalModel - an image describing the logical model of the database in Information Engineering notation. 
+- projectLogicalModel - an image describing the logical model of the database in Information Engineering notation. 
 
-d. projectRelationalModel - an image describing the relational model of the database, 
+- projectRelationalModel - an image describing the relational model of the database, 
 which is derived from the logical model described in projectLogicalModel
 
-e. projectLogicalModel.dmd - an interactive file which can be loaded using OracleDataModeler. 
+- projectLogicalModel.dmd - an interactive file which can be loaded using OracleDataModeler. 
 This file contains both the logical and relational models of the database and can be edited/manipulated with 
 OracleDataModeler when designing additions to the database.
 
@@ -84,14 +85,14 @@ js folder
 ==========
 This folder contains several javascript files utilized by the web UI. 
 
-a. excanvas.compiled.js - a javascript library by highcharts which contains scripts needed for using the highcharts API.
+- excanvas.compiled.js - a javascript library by highcharts which contains scripts needed for using the highcharts API.
 
-b. exporting.js - a javascript library by highcharts which allows users to export charts as a JPG, PNG, or vector image. 
+- exporting.js - a javascript library by highcharts which allows users to export charts as a JPG, PNG, or vector image. 
 
-c. gray.js - a javascript library which manipulates the look of highcharts. Not currently used in this application as
+- gray.js - a javascript library which manipulates the look of highcharts. Not currently used in this application as
 it does not match the desired color palate.
 
-d. highcharts.js -  The main javascript library by highcharts which contains scripts needed for using the highcharts API.
+- highcharts.js -  The main javascript library by highcharts which contains scripts needed for using the highcharts API.
 
 Note, highcharts.js and exporting.js are absolutely necessary for the application to run correctly. 
 
@@ -100,19 +101,21 @@ Parser folder
 The Parser folder contains code for the desktop application that takes ISSS information as a csv and populates the database
 with it. Several things are contained in the Parser folder:
 
-a. sample.csv - a sample csv file with which the database can be populated
+- sample.csv - a sample csv file with which the database can be populated
 
-b. mysql-connector-java-5.1.24 folder - this folder contains code for the JDBC driver created by Oracle. 
+- mysql-connector-java-5.1.24 folder - this folder contains code for the JDBC driver created by Oracle. 
 The JDBC driver allows java applications to communicate with a mysql database. 
 
-c. bin - the bin folder contains the ISSS_Parser.class file which run the desktop application
-To run this file on the command line from the bin folder (note, the $ is the command line prompt and not part of the command): 
-$ export CLASSPATH=$CLASSPATH:"you fill the explicit path to here/Parser/mysql-connector-java-5.1.24/mysql-connector-java-5.1.24-bin.jar" 
+- bin - the bin folder contains the ISSS_Parser.class file which run the desktop application
+To run this file on the command line from the bin folder (note, the $ is the command line prompt and not part of the command):
+
+```$ export CLASSPATH=$CLASSPATH:"you fill the explicit path to here/Parser/mysql-connector-java-5.1.24/mysql-connector-java-5.1.24-bin.jar"```
+
 this sets the classPath for java to find the JDBC driver needed to run the application.
 
 $ java ISSS_Parser
 
-d. src - contains ISSS_Parser.java the source code for the desktop application
+- src - contains ISSS_Parser.java the source code for the desktop application
 look at the documentation at docs/index.html for a detailed description of the application.
 Note, to auto-generate this documentation some private methods were temporarily marked as public. 
 However, in the documentation all of these methods have PRIVATE METHOD in their description. 
@@ -121,8 +124,8 @@ styles folder
 ==============
 contains the style sheets for the application. 
 
-a. default.css - is a style sheet used by ISSS for their website. It is utilized by the application
+- default.css - is a style sheet used by ISSS for their website. It is utilized by the application
 to maintain an identical style to the ISSS webstie. 
 
-b. application.css - contains css for elements that are application specific. 
+- application.css - contains css for elements that are application specific. 
 

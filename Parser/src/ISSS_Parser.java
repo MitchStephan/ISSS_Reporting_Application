@@ -218,6 +218,8 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 		String exchange = data[12];
 		//log.append("\nexchange: " + exchange);
 		
+		//log.append("\nWriting to Database...");
+		
 		String inserts = "";
 		//build insert for student table
 		inserts = "insert into student (ut_eid, last_name, first_name, gender, country_code) values (" + "'" +
@@ -225,9 +227,9 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 		Statement statement;
 		try {
 			statement = (Statement) connection.createStatement();
-			log.append("\nWriting to Databas...");
+			//log.append("\nWriting to Database...");
 			statement.executeUpdate(inserts);
-			log.append("\nData Comitted.");
+			//log.append("\nData Comitted.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -270,9 +272,9 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 		inserts += majorCode + ", 0, 0); ";
 		try {
 			statement = (Statement) connection.createStatement();
-			log.append("\nWriting to Databas...");
+			//log.append("\nWriting to Databas...");
 			statement.executeUpdate(inserts);
-			log.append("\nData Comitted.");
+			//log.append("\nData Comitted.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -285,15 +287,17 @@ public class ISSS_Parser extends JPanel implements ActionListener {
 		majorCode + ", " + schoolCode + ", " + "'" + schoolName + "'" + " ); ";
 		try {
 			statement = (Statement) connection.createStatement();
-			log.append("\nWriting to Databas...");
+			//log.append("\nWriting to Databas...");
 			statement.executeUpdate(inserts);
-			log.append("\nData Comitted.");
+			//log.append("\nData Comitted.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
 		dll += "\n" + inserts;
+		
+		//log.append("\nData Comitted.");
 	}
 
 	/**

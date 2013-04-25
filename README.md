@@ -8,6 +8,7 @@ The ISSS_Reporting_Application Folder should contains the following folders and 
 
 - isss_statistics.php
 - createChart.php
+- parser.jar
 - database folder
 - images folder
 - js folder
@@ -53,6 +54,11 @@ makeQuery($level, $gender, $region, $country, $program, $college) - constructs t
 the information requested by the user. The variables of the function contain this information.
 
 The syntax of the code for the charts generated within each query is based on the highcharts API. 
+
+parser.jar
+=============
+parser.jar is an executable for the desktop application which parser ISSS data passed in a csv file and
+populates the database behind the web application. 
 
 database folder
 ===============
@@ -118,11 +124,12 @@ this sets the classPath for java to find the JDBC driver needed to run the appli
 ```
 $ java ISSS_Parser
 ```
-
 - src - contains ISSS_Parser.java the source code for the desktop application
 look at the documentation at docs/index.html for a detailed description of the application.
 Note, to auto-generate this documentation some private methods were temporarily marked as public. 
 However, in the documentation all of these methods have PRIVATE METHOD in their description. 
+
+- docs - contains the documentation for the parser. open index.html in a browser to view the documentation
 
 styles folder
 ==============

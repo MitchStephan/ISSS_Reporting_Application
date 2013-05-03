@@ -27,9 +27,11 @@ https://zweb.cs.utexas.edu/users/cs105-s13/bveltman/ISSS_Application/isss_statis
 	3. Open your MySQL database and run the script found in ISSS_mysqlDDL.sql.
 	4. Go to Parser/src and open ISSS_Parser.java. Update lines 137-139 with the login credentials for your MySQL database. Note, the string url should look as followed: "jdbc:mysql://Address of your server:3306/name of your database"
 	5. Now you can run the desktop parser application from root folder by running:
--------
-$ java -jar parser.jar 
--------
+
+```
+$ java -jar parser.java
+```
+	
 	6. Currently, the desktop application parser csv files in the following format name,eid,stdnt type,lse,gender,class,major code,school code,school name,country code,special,irreg
 
 example: "Veltman, Boris",eid001,REG,2010,M,FRESHMAN,1,1,Cockrell School of Engineering,1,x,

@@ -21,6 +21,20 @@ Installation
 - The demo application is installed on UT's z server. You can access it by going to the following URL:
 https://zweb.cs.utexas.edu/users/cs105-s13/bveltman/ISSS_Application/isss_statistics.php
 
+- If you are interested in installing the application on your server please follow the instructions below:
+  1. Ensure that you have the latest version of PHP and MySQL on your server. Installation instructions for PHP can be found here: http://php.net/manual/en/install.php. While, installation instructions for MySQL can be found here: http://dev.mysql.com/doc/refman/5.1/en/installing.html.
+	2. After installing MySQL on your server, go to the database folder and update DBinfo.php with the login credentials to your MySQL database.
+	3. Open your MySQL database and run the script found in ISSS_mysqlDDL.sql.
+	4. Go to Parser/src and open ISSS_Parser.java. Update lines 137-139 with the login credentials for your MySQL database. Note, the string url should look as followed: "jdbc:mysql://Address of your server:3306/name of your database"
+	5. Now you can run the desktop parser application from root folder by running:
+-------
+$ java -jar parser.jar 
+-------
+	6. Currently, the desktop application parser csv files in the following format name,eid,stdnt type,lse,gender,class,major code,school code,school name,country code,special,irreg
+
+example: "Veltman, Boris",eid001,REG,2010,M,FRESHMAN,1,1,Cockrell School of Engineering,1,x,
+
+Note, a sample csv file can be found under Parser/sample.csv
 
 isss_statistics.php
 ===================

@@ -1,4 +1,4 @@
--ISSS_Reporting_Application Documentation
+ISSS_Reporting_Application Documentation
 =========================================
 
 The full contents of the application are found in the ISSS_Reporting_Application Folder.
@@ -15,6 +15,12 @@ The ISSS_Reporting_Application Folder should contains the following folders and 
 - Parser folder
 - styles folder 
 - Readme file
+
+Installation
+==============
+- The demo application is installed on UT's z server. You can access it by going to the following URL:
+https://zweb.cs.utexas.edu/users/cs105-s13/bveltman/ISSS_Application/isss_statistics.php
+
 
 isss_statistics.php
 ===================

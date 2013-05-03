@@ -31,12 +31,13 @@ https://zweb.cs.utexas.edu/users/cs105-s13/bveltman/ISSS_Application/isss_statis
 ```
 $ java -jar parser.java
 ```
-	
+
+
 	6. Currently, the desktop application parser csv files in the following format name,eid,stdnt type,lse,gender,class,major code,school code,school name,country code,special,irreg
 
-example: "Veltman, Boris",eid001,REG,2010,M,FRESHMAN,1,1,Cockrell School of Engineering,1,x,
+	example: "Veltman, Boris",eid001,REG,2010,M,FRESHMAN,1,1,Cockrell School of Engineering,1,x,
 
-Note, a sample csv file can be found under Parser/sample.csv
+	Note, a sample csv file can be found under Parser/sample.csv
 
 isss_statistics.php
 ===================

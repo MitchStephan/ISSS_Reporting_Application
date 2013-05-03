@@ -13,7 +13,7 @@ name,eid,stdnt type,lse,gender,class,major code,school code,school name,country 
 "abc, def",eid012,REG,2011,F,masters,12,12,McCombs School of Business,2,,
 "abc, def",eid013,REG,2011,F,doctoral,13,13,School of Architecture,3,,A0400
 "abc, def",eid014,REG,2011,F,pharmD,14,14,School of Information,4,x,
-"abc, def",eid015,REG,2011,F,FRESHMAN,15,15,School of Law,5,x,A0400
+"abc, def",eid015,REG,2011,F,law,15,15,School of Law,5,x,A0400
 "abc, def",eid016,VS,2011,F,sophomore,16,16,School of Nursing,6,,
 "abc, def",eid017,VS,2011,m,junior,17,17,School of Social Work,7,,
 "abc, def",eid018,VS,2011,m,senior,18,18,School of Undergraduate Studies,8,,
@@ -31,7 +31,7 @@ name,eid,stdnt type,lse,gender,class,major code,school code,school name,country 
 "abc, def",eid030,REG,2012,M,sophomore,12,12,McCombs School of Business,10,,
 "abc, def",eid031,REG,2012,M,junior,13,13,School of Architecture,1,x,A0400
 "abc, def",eid032,REG,2012,M,senior,14,14,School of Information,2,x,A0400
-"abc, def",eid033,REG,2012,M,masters,15,15,School of Law,3,x,A0400
+"abc, def",eid033,REG,2012,M,law,15,15,School of Law,3,x,A0400
 "abc, def",eid034,VS,2012,M,doctoral,16,16,School of Nursing,4,,
 "abc, def",eid035,VS,2012,M,pharmD,17,17,School of Social Work,5,,
 "abc, def",eid036,VS,2012,M,DOCTORATE,18,18,School of Undergraduate Studies,6,,
